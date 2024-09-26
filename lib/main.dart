@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 10,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     print("card clicked");
                   },
                   child: Card(
