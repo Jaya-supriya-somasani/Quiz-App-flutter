@@ -32,6 +32,9 @@ class _ApiService implements ApiService {
     required String programId,
     required String subjectId,
     required String chapterId,
+    required String bearerToken,
+    required String admissionNumber,
+    required String courseId,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -43,7 +46,12 @@ class _ApiService implements ApiService {
       r'subject_id': subjectId,
       r'chapter_id': chapterId,
     };
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Authorization': bearerToken,
+      r'admissionNumber': admissionNumber,
+      r'courseId': courseId,
+    };
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
         _setStreamType<HttpResponse<List<PracticeQuesModel>>>(Options(
