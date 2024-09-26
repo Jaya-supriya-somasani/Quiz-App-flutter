@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:quiz/data/models/practice_ques_model.dart';
+
 
 class PracticeQuesEntity extends Equatable {
   final String? id;
@@ -74,6 +76,32 @@ class PracticeQuesEntity extends Equatable {
       itemUri,
       isPrevious,
     ];
+  }
+
+  factory PracticeQuesEntity.fromModel(PracticeQuesModel model) {
+    return PracticeQuesEntity(
+        title: model.title,
+        explanation: model.explanation,
+        feedbackStatus: model.feedbackStatus,
+        hint: model.hint,
+        id: model.id,
+        isPrevious: model.isPrevious,
+        itemUri: model.itemUri,
+        noOfInteractions: model.noOfInteractions,
+        optionList: model.optionList,
+        pcsctId: model.pcsctId,
+        studentsAttempted: model.studentsAttempted,
+        responseIdentifier: model.responseIdentifier,
+        responseId: model.responseId,
+        questionType: model.questionType,
+        questionStatus: model.questionStatus,
+        questionNumber: model.questionNumber,
+        questionId: model.questionId,
+        questionData: model.questionData,
+        percStudentsCorrect: model.percStudentsCorrect,
+        questionLevel: model.questionLevel,
+        topicName: model.topicName,
+        uri: model.uri);
   }
 }
 
