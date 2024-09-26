@@ -1,0 +1,23 @@
+<svg width="157" height="100" viewBox="0 0 157 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g clip-path="url(#kg2w9951ya)">
+        <rect x=".5" width="156" height="100" rx="6" fill="url(#mtl6jafhub)" />
+        <path
+            d="m-7.953-5.883 164.45-4.78v20.22L37.102 50.334c-8.8 3.005-18.26-1.35-22.704-10.45L-7.953-5.884z"
+            fill="url(#ibtc7isd7c)" />
+    </g>
+    <defs>
+        <linearGradient id="mtl6jafhub" x1=".5" y1="0" x2="90.334" y2="140.141"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFF2E5" />
+            <stop offset="1" stop-color="#FACA9E" />
+        </linearGradient>
+        <linearGradient id="ibtc7isd7c" x1="231.897" y1="2.206" x2="3.09" y2="-.093"
+            gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FACA9E" />
+            <stop offset="1" stop-color="#FFF2E5" />
+        </linearGradient>
+        <clipPath id="kg2w9951ya">
+            <rect x=".5" width="156" height="100" rx="6" fill="#fff" />
+        </clipPath>
+    </defs>
+</svg>
