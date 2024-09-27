@@ -7,7 +7,7 @@ import 'package:quiz/utils/constants.dart';
 import 'package:quiz/utils/data_state.dart';
 import 'package:dio/dio.dart';
 
-abstract class PracticeQuesRepositoryImp implements PracticeQuesRepository {
+class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   final ApiService _apiService;
 
   PracticeQuesRepositoryImp(this._apiService);
