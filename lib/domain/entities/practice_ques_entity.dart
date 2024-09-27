@@ -16,7 +16,6 @@ class PracticeQuesEntity extends Equatable {
   final String? questionType;
   final String? questionStatus;
   final String? questionNumber;
-  final String? pcsctId;
   final int? percStudentsCorrect;
   final int? noOfInteractions;
   final String? questionLevel;
@@ -40,7 +39,6 @@ class PracticeQuesEntity extends Equatable {
     this.questionType,
     this.questionStatus,
     this.questionNumber,
-    this.pcsctId,
     this.percStudentsCorrect,
     this.noOfInteractions,
     this.questionLevel,
@@ -66,7 +64,6 @@ class PracticeQuesEntity extends Equatable {
       questionType,
       questionStatus,
       questionNumber,
-      pcsctId,
       percStudentsCorrect,
       noOfInteractions,
       questionLevel,
@@ -89,7 +86,6 @@ class PracticeQuesEntity extends Equatable {
         itemUri: model.itemUri,
         noOfInteractions: model.noOfInteractions,
         optionList: model.optionList,
-        pcsctId: model.pcsctId,
         studentsAttempted: model.studentsAttempted,
         responseIdentifier: model.responseIdentifier,
         responseId: model.responseId,

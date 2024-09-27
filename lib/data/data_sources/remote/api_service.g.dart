@@ -25,7 +25,6 @@ class _ApiService implements ApiService {
 
   @override
   Future<HttpResponse<List<PracticeQuesModel>>> fetchTopicExerciseQuestion({
-    required String pcsctId,
     required String practiceFormatId,
     required int questionNumber,
     required bool isPrevious,
@@ -38,7 +37,6 @@ class _ApiService implements ApiService {
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'pcsct_id': pcsctId,
       r'practice_format_id': practiceFormatId,
       r'question_number': questionNumber,
       r'is_previous': isPrevious,

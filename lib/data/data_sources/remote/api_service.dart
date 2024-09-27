@@ -1,17 +1,34 @@
+import 'package:dio/dio.dart';
 import 'package:quiz/data/data_sources/constants.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:dio/dio.dart';
 
 part 'api_service.g.dart';
 
 @RestApi(baseUrl: baseURL)
 abstract class ApiService {
-  factory ApiService(Dio dio) = _ApiService;
+  factory ApiService(Dio dio) {
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        print("Request: ${options.method} ${options.uri}");
+        print("Headers: ${options.headers}");
+        print("Request Body: ${options.data}");
+        return handler.next(options); // continue
+      },
+      onResponse: (response, handler) {
+        print("Response: ${response.statusCode} ${response.data}");
+        return handler.next(response); // continue
+      },
+      onError: (DioError e, handler) {
+        print("Error: ${e.message}");
+        return handler.next(e); // continue
+      },
+    ));
+    return _ApiService(dio);
+  }
 
   @GET('/explore/v3/practice/topic-test-question')
   Future<HttpResponse<List<PracticeQuesModel>>> fetchTopicExerciseQuestion({
-    @Query("pcsct_id") required String pcsctId,
     @Query("practice_format_id") required String practiceFormatId,
     @Query("question_number") required int questionNumber,
     @Query("is_previous") required bool isPrevious,

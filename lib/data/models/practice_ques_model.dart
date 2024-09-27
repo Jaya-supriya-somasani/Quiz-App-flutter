@@ -8,7 +8,6 @@ class PracticeQuesModel extends PracticeQuesEntity {
   final String? itemUri;
   final int? noOfInteractions;
   final List<OptionListEntity>? optionList;
-  final String? pcsctId;
   final int? percStudentsCorrect;
   final String? questionData;
   final String? questionId;
@@ -30,7 +29,6 @@ class PracticeQuesModel extends PracticeQuesEntity {
     this.itemUri,
     this.noOfInteractions,
     this.optionList,
-    this.pcsctId,
     this.percStudentsCorrect,
     this.questionData,
     this.questionId,
@@ -54,7 +52,6 @@ class PracticeQuesModel extends PracticeQuesEntity {
       itemUri: map['item_uri'] ?? "",
       noOfInteractions: map['no_of_interactions'] ?? "",
       optionList: map['option_list'] ?? "",
-      pcsctId: map['pcsct_id'] ?? ",",
       percStudentsCorrect: map['perc_students_correct'] ?? "",
       questionData: map['question_data'] ?? "",
       questionId: map['question_id'] ?? "",

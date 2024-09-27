@@ -16,7 +16,6 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   Future<DataState<List<PracticeQuesModel>>> getPracticeQuestions() async {
     try {
       final response = await _apiService.fetchTopicExerciseQuestion(
-          pcsctId: pcsctId,
           practiceFormatId: practiceFormatId,
           questionNumber: questionNumber,
           isPrevious: isPrevious,
@@ -27,7 +26,22 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
           admissionNumber: admissionNumber,
           courseId: courseId);
 
-      if (response.response.statusCode == HttpStatus.ok) {
+      print("request ${_apiService.fetchTopicExerciseQuestion(
+          practiceFormatId: practiceFormatId,
+          questionNumber: questionNumber,
+          isPrevious: isPrevious,
+          programId: programId,
+          subjectId: subjectId,
+          chapterId: chapterId,
+          bearerToken: bearerToken,
+          admissionNumber: admissionNumber,
+          courseId: courseId)
+          }");
+
+       // Log response after receiving it
+      print("Received response: ${response.data}"); print("Received response: ${response.data}");
+
+      if (response.response.statusCode==HttpStatus.ok) {
         final questionData =
             response.response.data['data'] as Map<String, dynamic>;
         print("questiondata--$questionData");
@@ -40,6 +54,8 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
 
         return DataSuccessState(questions);
       } else {
+        print("API request failed: ${response.response.statusCode} - ${response.response.statusMessage}");
+
         return DataFailedState(
           DioError(
             error: response.response.statusMessage,

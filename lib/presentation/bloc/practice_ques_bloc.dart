@@ -15,6 +15,7 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
   void onGetPracticeQues(
       PracticeQuesEvent event, Emitter<GetPracticeQuesState> emit) async {
     final dataState = await _getPracticeQuesUseCase();
+    print("data-state $dataState");
     if (dataState is DataSuccessState && dataState.data!.isNotEmpty) {
       emit(GetPracticeQuesLoadedState(dataState.data!));
     }
