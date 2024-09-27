@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/di.dart';
+import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
+import 'package:quiz/presentation/bloc/practice_ques_bloc.dart';
 import 'package:quiz/presentation/widgets/subject_card.dart';
 
 import 'practice_main_screen.dart';
@@ -51,7 +55,13 @@ class _HomeScreen extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PracticeMainScreen()),
+                        builder: (context) => BlocProvider(
+                          create: (context) => PracticeQuesBloc(
+                            sl<GetPracticeQuesUseCase>(),
+                          ),
+                          child: const PracticeMainScreen(),
+                        ),
+                      ),
                     );
                   },
                 ),
