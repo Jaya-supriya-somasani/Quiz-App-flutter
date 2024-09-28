@@ -28,7 +28,6 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
 
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
-        print("dataMap: $dataMap");
 
         if (dataMap == null) {
           return DataFailedState(DioError(
@@ -40,9 +39,7 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
         }
 
         final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
-        print("practiceQuestion: $practiceQuestion");
-
-        return DataSuccessState(practiceQuestion); // Return the full question wrapped in a list
+        return DataSuccessState(practiceQuestion);
       } else {
         return DataFailedState(
           DioError(

@@ -19,10 +19,8 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
       final dataState = await _getPracticeQuesUseCase();
 
       if (dataState is DataSuccessState) {
-        print("Data received in BLoC: ${dataState.data}");
         emit(GetPracticeQuesLoadedState(dataState.data!));
       } else if (dataState is DataFailedState) {
-        print("Error received in BLoC: ${dataState.error}");
         emit(GetPracticeQuesErrorState(dataState.error));
       }
     } catch (e) {

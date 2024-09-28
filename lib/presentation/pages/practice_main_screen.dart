@@ -30,8 +30,6 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   Widget _makeApiCall() {
     return BlocBuilder<PracticeQuesBloc, GetPracticeQuesState>(
       builder: (context, state) {
-        print("Current state in UI: $state");
-
         if (state is GetPracticeQuesLoadingState) {
           return const Center(child: CupertinoActivityIndicator());
         }
@@ -39,13 +37,12 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           return Center(child: Text('Error: ${state.error?.message}'));
         }
         if (state is GetPracticeQuesLoadedState) {
-          print("Loaded data in UI: ${state.practiceQuestions}");
           return ListView.builder(
             itemCount: state.practiceQuestions.optionList?.length ?? 0,
             itemBuilder: (context, index) {
               final option = state.practiceQuestions.optionList![index];
               return ListTile(
-                title: Text(option.optionData ?? "No Question Data"),
+                title: Text(state.practiceQuestions.questionStatus.toString()),
               );
             },
           );

@@ -11,16 +11,6 @@ class GetPracticeQuesUseCase
 
   @override
   Future<DataState<PracticeQuesEntity>> call({void params}) async {
-    final data = await _practiceQuesRepository.getPracticeQuestions(); // Await the Future
-    print("Got questions");
-
-    if (data is DataSuccessState<PracticeQuesEntity>) {
-      print("Questions: ${data.data}");
-    } else if (data is DataFailedState) {
-      print("Error: ${data.error}");
-    }
-
-    print("@@@@@@");
-    return data; // Return the resolved data
+    return await _practiceQuesRepository.getPracticeQuestions();
   }
 }
