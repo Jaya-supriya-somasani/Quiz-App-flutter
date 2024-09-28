@@ -21,7 +21,7 @@ class GetPracticeQuesErrorState extends GetPracticeQuesState {
 }
 
 class GetPracticeQuesLoadedState extends GetPracticeQuesState {
-  final List<PracticeQuesEntity> questions;
+  final PracticeQuesEntity practiceQuestions;
 
-  const GetPracticeQuesLoadedState(this.questions);
+  const GetPracticeQuesLoadedState(this.practiceQuestions) : super(practiceQuestions: practiceQuestions);
 }

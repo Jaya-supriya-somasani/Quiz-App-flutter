@@ -9,7 +9,7 @@ class PracticeQuesEntity extends Equatable {
   final String? questionId;
   final String? hint;
   final String? topicName;
-  final String? title;
+  final int? title;
   final int? studentsAttempted;
   final String? responseId;
   final String? questionType;

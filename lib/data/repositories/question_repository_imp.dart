@@ -12,7 +12,7 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   PracticeQuesRepositoryImp(this._apiService);
 
   @override
-  Future<DataState<List<PracticeQuesModel>>> getPracticeQuestions() async {
+  Future<DataState<PracticeQuesModel>> getPracticeQuestions() async {
     try {
       final response = await _apiService.fetchTopicExerciseQuestion(
         practiceFormatId: practiceFormatId,
@@ -28,8 +28,8 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
 
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
+        print("dataMap: $dataMap");
 
-        // Check if dataMap is null
         if (dataMap == null) {
           return DataFailedState(DioError(
             error: "Data is null",
@@ -39,23 +39,10 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
           ));
         }
 
-        final practiceData = dataMap['option_list'] as List<dynamic>?;
+        final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
+        print("practiceQuestion: $practiceQuestion");
 
-        if (practiceData == null) {
-          return DataFailedState(DioError(
-            error: "Practice data is null",
-            response: response.response,
-            type: DioExceptionType.unknown,
-            requestOptions: response.response.requestOptions,
-          ));
-        }
-
-        // Parse the list of practice questions and convert to List
-        final parsedQuestions = practiceData
-            .map((d) => PracticeQuesModel.fromJson(d))
-            .toList(); // Convert Iterable to List
-
-        return DataSuccessState(parsedQuestions); // Return the list of questions
+        return DataSuccessState(practiceQuestion); // Return the full question wrapped in a list
       } else {
         return DataFailedState(
           DioError(
@@ -67,7 +54,7 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
         );
       }
     } on DioError catch (e) {
-      print("Exception !!!!!!!!!");
+      print("Exception: $e");
       return DataFailedState(e);
     }
   }

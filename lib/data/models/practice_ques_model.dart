@@ -18,7 +18,7 @@ class PracticeQuesModel extends PracticeQuesEntity {
   final String? responseId;
   final String? responseIdentifier;
   final int? studentsAttempted;
-  final String? title;
+  final int? title;
   final String? uri;
 
   const PracticeQuesModel({
@@ -44,6 +44,8 @@ class PracticeQuesModel extends PracticeQuesEntity {
   });
 
   factory PracticeQuesModel.fromJson(Map<String, dynamic> map) {
+    print("Parsing PracticeQuesModel from JSON: $map"); // Debugging print
+
     return PracticeQuesModel(
       id: map['_id'] ?? "",
       explanation: map['explanation'] ?? "",
@@ -64,9 +66,8 @@ class PracticeQuesModel extends PracticeQuesEntity {
       responseId: map['response_id'] ?? "",
       responseIdentifier: map['response_identifier'] ?? "",
       studentsAttempted: map['students_attempted'] ?? 0,
-      title: map['title'] ?? "",
+      title: map['title'] ?? 0,
       uri: map['uri'] ?? "",
     );
   }
-
 }

@@ -14,14 +14,20 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
 
   void onGetPracticeQues(
       GetExamDetails event, Emitter<GetPracticeQuesState> emit) async {
-    final dataState = await _getPracticeQuesUseCase();
-    print("data-state $dataState");
-    if (dataState is DataSuccessState) {
-      // Assuming it returns a single PracticeQuesEntity
-      emit(GetPracticeQuesLoadedState(dataState.data!)); // Change to pass a single entity
-    }
-    if (dataState is DataFailedState) {
-      emit(GetPracticeQuesErrorState(dataState.error));
+    emit(const GetPracticeQuesLoadingState());
+    try {
+      final dataState = await _getPracticeQuesUseCase();
+
+      if (dataState is DataSuccessState) {
+        print("Data received in BLoC: ${dataState.data}");
+        emit(GetPracticeQuesLoadedState(dataState.data!));
+      } else if (dataState is DataFailedState) {
+        print("Error received in BLoC: ${dataState.error}");
+        emit(GetPracticeQuesErrorState(dataState.error));
+      }
+    } catch (e) {
+      print("Error in BLoC: $e");
+      emit(const GetPracticeQuesErrorState(null));
     }
   }
 }
