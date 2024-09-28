@@ -24,7 +24,7 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<List<PracticeQuesModel>>> fetchTopicExerciseQuestion({
+  Future<HttpResponse<PracticeQuesModel>> fetchTopicExerciseQuestion({
     required String practiceFormatId,
     required int questionNumber,
     required bool isPrevious,
@@ -51,30 +51,26 @@ class _ApiService implements ApiService {
     };
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options =
-        _setStreamType<HttpResponse<List<PracticeQuesModel>>>(Options(
+    final _options = _setStreamType<HttpResponse<PracticeQuesModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/explore/v3/practice/topic-test-question',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<PracticeQuesModel> _value;
+        .compose(
+          _dio.options,
+          '/explore/v3/practice/topic-test-question',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PracticeQuesModel _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              PracticeQuesModel.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = PracticeQuesModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

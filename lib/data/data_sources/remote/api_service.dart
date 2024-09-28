@@ -13,7 +13,7 @@ abstract class ApiService {
         print("Request: ${options.method} ${options.uri}");
         print("Headers: ${options.headers}");
         print("Request Body: ${options.data}");
-        return handler.next(options); // continue
+        return handler.next(options);
       },
       onResponse: (response, handler) {
         print("Response: ${response.statusCode} ${response.data}");
@@ -28,7 +28,7 @@ abstract class ApiService {
   }
 
   @GET('/explore/v3/practice/topic-test-question')
-  Future<HttpResponse<List<PracticeQuesModel>>> fetchTopicExerciseQuestion({
+  Future<HttpResponse<PracticeQuesModel>> fetchTopicExerciseQuestion({
     @Query("practice_format_id") required String practiceFormatId,
     @Query("question_number") required int questionNumber,
     @Query("is_previous") required bool isPrevious,

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:quiz/data/data_sources/remote/api_service.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:quiz/domain/repositories/practice_ques_repository.dart';
@@ -16,46 +15,48 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   Future<DataState<List<PracticeQuesModel>>> getPracticeQuestions() async {
     try {
       final response = await _apiService.fetchTopicExerciseQuestion(
-          practiceFormatId: practiceFormatId,
-          questionNumber: questionNumber,
-          isPrevious: isPrevious,
-          programId: programId,
-          subjectId: subjectId,
-          chapterId: chapterId,
-          bearerToken: bearerToken,
-          admissionNumber: admissionNumber,
-          courseId: courseId);
+        practiceFormatId: practiceFormatId,
+        questionNumber: questionNumber,
+        isPrevious: isPrevious,
+        programId: programId,
+        subjectId: subjectId,
+        chapterId: chapterId,
+        bearerToken: bearerToken,
+        admissionNumber: admissionNumber,
+        courseId: courseId,
+      );
 
-      print("request ${_apiService.fetchTopicExerciseQuestion(
-          practiceFormatId: practiceFormatId,
-          questionNumber: questionNumber,
-          isPrevious: isPrevious,
-          programId: programId,
-          subjectId: subjectId,
-          chapterId: chapterId,
-          bearerToken: bearerToken,
-          admissionNumber: admissionNumber,
-          courseId: courseId)
-          }");
+      if (response.response.statusCode == HttpStatus.ok) {
+        final dataMap = response.response.data['data'];
 
-       // Log response after receiving it
-      print("Received response: ${response.data}"); print("Received response: ${response.data}");
+        // Check if dataMap is null
+        if (dataMap == null) {
+          return DataFailedState(DioError(
+            error: "Data is null",
+            response: response.response,
+            type: DioExceptionType.unknown,
+            requestOptions: response.response.requestOptions,
+          ));
+        }
 
-      if (response.response.statusCode==HttpStatus.ok) {
-        final questionData =
-            response.response.data['data'] as Map<String, dynamic>;
-        print("questiondata--$questionData");
-        final questionListData = questionData['option_list'] as List;
+        final practiceData = dataMap['option_list'] as List<dynamic>?;
 
-        // Convert each dynamic entry to a PracticeQuesModel
-        final questions = questionListData
-            .map((question) => PracticeQuesModel.fromJson(question))
-            .toList();
+        if (practiceData == null) {
+          return DataFailedState(DioError(
+            error: "Practice data is null",
+            response: response.response,
+            type: DioExceptionType.unknown,
+            requestOptions: response.response.requestOptions,
+          ));
+        }
 
-        return DataSuccessState(questions);
+        // Parse the list of practice questions and convert to List
+        final parsedQuestions = practiceData
+            .map((d) => PracticeQuesModel.fromJson(d))
+            .toList(); // Convert Iterable to List
+
+        return DataSuccessState(parsedQuestions); // Return the list of questions
       } else {
-        print("API request failed: ${response.response.statusCode} - ${response.response.statusMessage}");
-
         return DataFailedState(
           DioError(
             error: response.response.statusMessage,
@@ -66,6 +67,7 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
         );
       }
     } on DioError catch (e) {
+      print("Exception !!!!!!!!!");
       return DataFailedState(e);
     }
   }

@@ -12,11 +12,11 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<Dio>(Dio());
 
   // Dependencies
-  sl.registerSingleton<ApiService>(ApiService(sl()));
+  sl.registerSingleton<ApiService>(ApiService(sl<Dio>()));
 
-  sl.registerSingleton<PracticeQuesRepository>(PracticeQuesRepositoryImp(sl()));
+  sl.registerSingleton<PracticeQuesRepository>(PracticeQuesRepositoryImp(sl<ApiService>()));
 
-  sl.registerFactory<PracticeQuesBloc>(() => PracticeQuesBloc(sl()));
+  sl.registerSingleton<GetPracticeQuesUseCase>(GetPracticeQuesUseCase(sl<PracticeQuesRepository>()));
 
-  sl.registerSingleton(GetPracticeQuesUseCase(sl()));
+  sl.registerFactory<PracticeQuesBloc>(() => PracticeQuesBloc(sl<GetPracticeQuesUseCase>()));
 }

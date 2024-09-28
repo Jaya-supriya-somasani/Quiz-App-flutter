@@ -28,17 +28,25 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   }
 
   _makeApiCall() {
+    print("Calling api");
     return BlocBuilder<PracticeQuesBloc, GetPracticeQuesState>(
         builder: (_, state) {
-      if (state is GetPracticeQuesLoadingState) {
-        return const Center(child: CupertinoActivityIndicator());
+      if (state is GetPracticeQuesLoadedState) {
+        print(" data-is-in ${state.practiceQuestions}");
+        return ListView.builder(
+          itemCount: state.practiceQuestions?.optionList?.length,
+          itemBuilder: (context, index) {
+            return const ListTile(
+              title: Text("questionh88"),
+            );
+          },
+        );
       }
       if (state is GetPracticeQuesErrorState) {
         return const Center(child: Icon(Icons.refresh));
       }
-      if (state is GetPracticeQuesLoadedState) {
-        print(" data-is-in ${state.practiceQuestions}");
-        return const Text("Data is successfully loaded");
+      if (state is GetPracticeQuesLoadingState) {
+        return const Center(child: CupertinoActivityIndicator());
       }
       return const SizedBox();
     });

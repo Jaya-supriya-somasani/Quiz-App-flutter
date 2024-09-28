@@ -3,13 +3,13 @@ import 'package:dio/dio.dart';
 import 'package:quiz/domain/entities/practice_ques_entity.dart';
 
 abstract class GetPracticeQuesState extends Equatable {
-  final List<PracticeQuesEntity>? practiceQuestions;
+  final PracticeQuesEntity? practiceQuestions;
   final DioError? error;
 
   const GetPracticeQuesState({this.practiceQuestions, this.error});
 
   @override
-  List<Object> get props => [practiceQuestions!, error!];
+  List<Object?> get props => [practiceQuestions, error];
 }
 
 class GetPracticeQuesLoadingState extends GetPracticeQuesState {
@@ -21,6 +21,7 @@ class GetPracticeQuesErrorState extends GetPracticeQuesState {
 }
 
 class GetPracticeQuesLoadedState extends GetPracticeQuesState {
-  const GetPracticeQuesLoadedState(List<PracticeQuesEntity>? practiceQuesEntity)
-      : super(practiceQuestions: practiceQuesEntity);
+  final List<PracticeQuesEntity> questions;
+
+  const GetPracticeQuesLoadedState(this.questions);
 }
