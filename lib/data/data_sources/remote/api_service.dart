@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:quiz/data/data_sources/constants.dart';
+import 'package:quiz/data/models/practice_excercise_model.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -35,6 +36,17 @@ abstract class ApiService {
     @Query("program_id") required String programId,
     @Query("subject_id") required String subjectId,
     @Query("chapter_id") required String chapterId,
+    @Header("Authorization") required String bearerToken,
+    @Header("admissionNumber") required String admissionNumber,
+    @Header("courseId") required String courseId,
+  });
+
+  @GET('/explore/v3/practice/topic-exercise-list')
+  Future<HttpResponse<List<PracticeExerciseModel>>> fetchExerciseData({
+    @Query("subject_id") required String subjectId,
+    @Query("chapter_id") required String chapterId,
+    @Query("program_id") required String programId,
+    @Query("topic_id") required String topicId,
     @Header("Authorization") required String bearerToken,
     @Header("admissionNumber") required String admissionNumber,
     @Header("courseId") required String courseId,

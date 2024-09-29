@@ -79,6 +79,62 @@ class _ApiService implements ApiService {
     return httpResponse;
   }
 
+  @override
+  Future<HttpResponse<List<PracticeExerciseModel>>> fetchExerciseData({
+    required String subjectId,
+    required String chapterId,
+    required String programId,
+    required String topicId,
+    required String bearerToken,
+    required String admissionNumber,
+    required String courseId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'subject_id': subjectId,
+      r'chapter_id': chapterId,
+      r'program_id': programId,
+      r'topic_id': topicId,
+    };
+    final _headers = <String, dynamic>{
+      r'Authorization': bearerToken,
+      r'admissionNumber': admissionNumber,
+      r'courseId': courseId,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options =
+        _setStreamType<HttpResponse<List<PracticeExerciseModel>>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/explore/v3/practice/topic-exercise-list',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
+    final _result = await _dio.fetch<List<dynamic>>(_options);
+    late List<PracticeExerciseModel> _value;
+    try {
+      _value = _result.data!
+          .map((dynamic i) =>
+              PracticeExerciseModel.fromJson(i as Map<String, dynamic>))
+          .toList();
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
