@@ -40,10 +40,19 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           return ListView.builder(
             itemCount: state.practiceQuestions.optionList?.length ?? 0,
             itemBuilder: (context, index) {
-              final option = state.practiceQuestions.optionList![index];
-              return ListTile(
-                title: Text(state.practiceQuestions.questionStatus.toString()),
-              );
+             return Column(
+               children: [
+                 Row(
+                   children: [
+                     Text("Q${state.practiceQuestions.questionNumber}"),
+                     Text("${state.practiceQuestions.questionType}")
+                   ],
+                 )
+               ],
+             );
+              // return ListTile(
+              //   title: Text(state.practiceQuestions.questionStatus.toString()),
+              // );
             },
           );
         }
