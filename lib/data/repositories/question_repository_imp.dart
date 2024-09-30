@@ -4,7 +4,6 @@ import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:quiz/domain/repositories/practice_ques_repository.dart';
 import 'package:quiz/utils/constants.dart';
 import 'package:quiz/utils/data_state.dart';
-import 'package:dio/dio.dart';
 
 class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   final ApiService _apiService;
@@ -30,29 +29,17 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
         final dataMap = response.response.data['data'];
 
         if (dataMap == null) {
-          return DataFailedState(DioError(
-            error: "Data is null",
-            response: response.response,
-            type: DioExceptionType.unknown,
-            requestOptions: response.response.requestOptions,
-          ));
+          return const DataFailedState("data is null");
         }
 
         final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
         return DataSuccessState(practiceQuestion);
       } else {
-        return DataFailedState(
-          DioError(
-            error: response.response.statusMessage,
-            response: response.response,
-            type: DioExceptionType.unknown,
-            requestOptions: response.response.requestOptions,
-          ),
-        );
+        return const DataFailedState("dfjhgd");
       }
-    } on DioError catch (e) {
+    } catch (e) {
       print("Exception: $e");
-      return DataFailedState(e);
+      return DataFailedState(e.toString());
     }
   }
 }

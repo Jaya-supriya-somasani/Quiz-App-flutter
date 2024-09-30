@@ -1,7 +1,9 @@
-import 'package:quiz/domain/entities/practice_exercise.dart';
+import 'package:quiz/data/models/api_response.dart';
 import 'package:quiz/domain/repositories/practice_exercise_repo.dart';
 import 'package:quiz/utils/data_state.dart';
 import 'package:quiz/utils/usecase.dart';
+
+import '../entities/practice_exercise.dart';
 
 class GetPracticeExerciseUseCase
     implements UseCase<DataState<List<PracticeExerciseEntity>>, void> {

@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 import '../../data/models/practice_excercise_model.dart';
 
-class PracticeExerciseEntity extends Equatable {
+class PracticeExerciseEntity {
   final String? practiceFormatId;
   final String? practiceFormat;
   final int? sortOrder;
   final String? practiceFormatImageUrl;
   final int? totalQuestions;
   final int? completedQuestions;
-  final double? accuracy;
+  final int? accuracy;
   final int? incorrect;
   final int? skipped;
   final int? avgSpentTime;
@@ -29,87 +29,61 @@ class PracticeExerciseEntity extends Equatable {
   final String? practiceType;
   final Assets? assets;
 
-  const PracticeExerciseEntity(
-      {this.practiceFormatId,
-      this.practiceFormat,
-      this.sortOrder,
-      this.practiceFormatImageUrl,
-      this.totalQuestions,
-      this.completedQuestions,
-      this.accuracy,
-      this.incorrect,
-      this.skipped,
-      this.avgSpentTime,
-      this.speed,
-      this.subjectId,
-      this.subjectName,
-      this.subjectImageUrl,
-      this.primaryIcon,
-      this.practiceCard,
-      this.primaryColor,
-      this.secondaryIcon,
-      this.secondaryColor,
-      this.practiceCardAndroid,
-      this.chapterId,
-      this.chapterName,
-      this.chapterImageUrl,
-      this.practiceType,
-      this.assets});
+  PracticeExerciseEntity({
+    this.practiceFormatId,
+    this.practiceFormat,
+    this.sortOrder,
+    this.practiceFormatImageUrl,
+    this.totalQuestions,
+    this.completedQuestions,
+    this.accuracy,
+    this.incorrect,
+    this.skipped,
+    this.avgSpentTime,
+    this.speed,
+    this.subjectId,
+    this.subjectName,
+    this.subjectImageUrl,
+    this.primaryIcon,
+    this.practiceCard,
+    this.primaryColor,
+    this.secondaryIcon,
+    this.secondaryColor,
+    this.practiceCardAndroid,
+    this.chapterId,
+    this.chapterName,
+    this.chapterImageUrl,
+    this.practiceType,
+    this.assets,
+  });
 
-  @override
-  List<Object?> get props => [
-        practiceFormatId,
-        practiceFormat,
-        sortOrder,
-        practiceFormatImageUrl,
-        totalQuestions,
-        completedQuestions,
-        accuracy,
-        incorrect,
-        skipped,
-        avgSpentTime,
-        speed,
-        subjectId,
-        subjectImageUrl,
-        subjectName,
-        primaryIcon,
-        practiceCard,
-        primaryColor,
-        secondaryIcon,
-        secondaryColor,
-        practiceCardAndroid,
-        chapterId,
-        chapterImageUrl,
-        practiceType,
-        assets
-      ];
-
-  factory PracticeExerciseEntity.fromModel(PracticeExerciseModel model) {
+  factory PracticeExerciseEntity.fromJson(Map<String, dynamic> json) {
     return PracticeExerciseEntity(
-        practiceType: model.practiceType,
-        chapterId: model.chapterId,
-        accuracy: model.accuracy,
-        assets: model.assets,
-        avgSpentTime: model.avgSpentTime,
-        chapterImageUrl: model.chapterImageUrl,
-        chapterName: model.chapterName,
-        completedQuestions: model.completedQuestions,
-        incorrect: model.incorrect,
-        practiceCard: model.practiceCard,
-        practiceCardAndroid: model.practiceCardAndroid,
-        practiceFormat: model.practiceFormat,
-        practiceFormatId: model.practiceFormatId,
-        practiceFormatImageUrl: model.practiceFormatImageUrl,
-        primaryColor: model.primaryColor,
-        primaryIcon: model.primaryIcon,
-        secondaryColor: model.secondaryColor,
-        secondaryIcon: model.secondaryIcon,
-        skipped: model.skipped,
-        sortOrder: model.sortOrder,
-        speed: model.speed,
-        subjectId: model.subjectId,
-        subjectImageUrl: model.subjectImageUrl,
-        subjectName: model.subjectName,
-        totalQuestions: model.totalQuestions);
+      practiceFormatId: json['practiceFormatId'],
+      practiceFormat: json['practiceFormat'],
+      sortOrder: json['sortOrder'],
+      practiceFormatImageUrl: json['practiceFormatImageUrl'],
+      totalQuestions: json['totalQuestions'],
+      completedQuestions: json['completedQuestions'],
+      accuracy: json['accuracy'],
+      incorrect: json['incorrect'],
+      skipped: json['skipped'],
+      avgSpentTime: json['avgSpentTime'],
+      speed: json['speed'],
+      subjectId: json['subjectId'],
+      subjectName: json['subjectName'],
+      subjectImageUrl: json['subjectImageUrl'],
+      primaryIcon: json['primaryIcon'],
+      practiceCard: json['practiceCard'],
+      primaryColor: json['primaryColor'],
+      secondaryIcon: json['secondaryIcon'],
+      secondaryColor: json['secondaryColor'],
+      practiceCardAndroid: json['practiceCardAndroid'],
+      chapterId: json['chapterId'],
+      chapterName: json['chapterName'],
+      chapterImageUrl: json['chapterImageUrl'],
+      practiceType: json['practiceType'],
+      assets: Assets.fromJson(json['assets']), // Adjust as necessary if Assets is a class
+    );
   }
 }

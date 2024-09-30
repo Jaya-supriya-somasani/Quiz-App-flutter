@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:dio/dio.dart';
-import 'package:quiz/domain/entities/practice_exercise.dart';
+import 'package:quiz/data/models/api_response.dart';
+
+import '../../../domain/entities/practice_exercise.dart';
 
 abstract class GetPracticeExerciseState extends Equatable {
-  final List<PracticeExerciseEntity>? practiceExerciseEntity;
+  final PracticeExerciseModelResponse? practiceExerciseEntity;
   final String? error;
 
   const GetPracticeExerciseState({this.practiceExerciseEntity, this.error});

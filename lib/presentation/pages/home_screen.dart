@@ -65,7 +65,7 @@ class _HomeScreen extends State<HomeScreen> {
                     return Center(child: Text('Error: ${state.error ?? 'Unknown Error'}'));
                   } else if (state is GetPracticeExerciseLoadedState) {
                     return ListView.builder(
-                      itemCount: state.exercises.length,
+                      itemCount: 2,
                       itemBuilder: (context, index) {
                         final exercise = state.exercises[index];
                         return ListTile(

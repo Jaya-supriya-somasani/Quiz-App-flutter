@@ -1,3 +1,4 @@
+import 'package:dio/src/dio_exception.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
@@ -21,7 +22,7 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
       if (dataState is DataSuccessState) {
         emit(GetPracticeQuesLoadedState(dataState.data!));
       } else if (dataState is DataFailedState) {
-        emit(GetPracticeQuesErrorState(dataState.error));
+        emit(GetPracticeQuesErrorState(dataState.error as DioError?));
       }
     } catch (e) {
       print("Error in BLoC: $e");
