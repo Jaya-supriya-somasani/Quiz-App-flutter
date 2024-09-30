@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      PracticeExerciseBloc(sl<GetPracticeExerciseUseCase>())..add(const GetPracticeExerciseDetails()),
+      create: (context) => PracticeExerciseBloc(sl<GetPracticeExerciseUseCase>()),
       child: MaterialApp(
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

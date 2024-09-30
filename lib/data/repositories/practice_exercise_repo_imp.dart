@@ -8,52 +8,65 @@ import 'package:quiz/utils/constants.dart';
 import 'package:quiz/utils/data_state.dart';
 import 'package:dio/dio.dart';
 
-
-class PracticeExerciseRepoImp implements PracticeExerciseRepo{
+class PracticeExerciseRepoImp implements PracticeExerciseRepo {
   final ApiService _apiService;
+
   PracticeExerciseRepoImp(this._apiService);
 
   @override
-  Future<DataState<List<PracticeExerciseEntity>>> getPracticeExerciseData() async{
+  Future<DataState<List<PracticeExerciseEntity>>>
+      getPracticeExerciseData() async {
+    final response = await _apiService.fetchExerciseData(
+      subjectId: subjectId,
+      admissionNumber: admissionNumber,
+      bearerToken: bearerToken,
+      chapterId: chapterId,
+      courseId: courseId,
+      programId: programId,
+      topicId: "",
+    );
     try {
-      final response = await _apiService.fetchExerciseData(
-        subjectId: subjectId,
-        admissionNumber: admissionNumber,
-        bearerToken: bearerToken,
-        chapterId: chapterId,
-        courseId: courseId,
-        programId: programId,
-        topicId: "",
-      );
-
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
-
-        if (dataMap == null) {
-          return DataFailedState(DioError(
-            error: "Data is null",
-            response: response.response,
-            type: DioExceptionType.unknown,
-            requestOptions: response.response.requestOptions,
-          ));
+        print("dataMap--- $dataMap");
+        if (dataMap != null) {
+          final exerciseData = dataMap.map((item) {
+            return PracticeExerciseModel.fromJson(item);
+          });
+          return DataSuccessState(exerciseData);
+        } else {
+          return DataFailedState(
+            DioError(
+              error: "Expected a list but received: ${dataMap.runtimeType}",
+              response: response.response,
+              type: DioErrorType.unknown,
+              requestOptions:
+                  response.response.requestOptions,
+            ),
+          );
         }
-
-        final exerciseData = PracticeExerciseModel.fromJson(dataMap);
-        //todo need to change here
-        return DataSuccessState(exerciseData as List<PracticeExerciseEntity>);
       } else {
         return DataFailedState(
           DioError(
-            error: response.response.statusMessage,
+            error: response.response.statusMessage ?? "Unknown error",
             response: response.response,
             type: DioExceptionType.unknown,
-            requestOptions: response.response.requestOptions,
+            requestOptions:
+                response.response.requestOptions,
           ),
         );
       }
-    } on DioError catch (e) {
-      print("Exception: $e");
+    } on DioException catch (e) {
+      print("Exception in exercise: ${e.message}");
       return DataFailedState(e);
+    } catch (e) {
+      print("Unexpected error: $e");
+      return DataFailedState(DioException(
+        error: "Unexpected error occurred",
+        type: DioExceptionType.unknown, // Use appropriate type
+        requestOptions: RequestOptions(
+            path: ""),
+      ));
     }
   }
 }

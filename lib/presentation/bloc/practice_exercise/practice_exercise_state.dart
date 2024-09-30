@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:quiz/domain/entities/practice_exercise.dart';
 
 abstract class GetPracticeExerciseState extends Equatable {
-  final PracticeExerciseEntity? practiceExerciseEntity;
-  final DioException? error;
+  final List<PracticeExerciseEntity>? practiceExerciseEntity;
+  final String? error;
 
   const GetPracticeExerciseState({this.practiceExerciseEntity, this.error});
 
@@ -17,7 +17,7 @@ class GetPracticeExerciseLoadingState extends GetPracticeExerciseState {
 }
 
 class GetPracticeExerciseErrorState extends GetPracticeExerciseState {
-  const GetPracticeExerciseErrorState(DioException? error) : super(error: error);
+  const GetPracticeExerciseErrorState(String? error) : super(error: error);
 }
 
 class GetPracticeExerciseLoadedState extends GetPracticeExerciseState {

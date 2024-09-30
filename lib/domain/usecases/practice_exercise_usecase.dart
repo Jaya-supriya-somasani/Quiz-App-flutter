@@ -10,7 +10,9 @@ class GetPracticeExerciseUseCase
   const GetPracticeExerciseUseCase(this._practiceExerciseRepo);
 
   @override
-  Future<DataState<List<PracticeExerciseEntity>>> call({void params}) {
-    return _practiceExerciseRepo.getPracticeExerciseData();
+  Future<DataState<List<PracticeExerciseEntity>>> call({void params}) async{
+    final data =await _practiceExerciseRepo.getPracticeExerciseData();
+    print("usecase-data $data");
+    return data;
   }
 }

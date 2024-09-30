@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:quiz/data/data_sources/constants.dart';
+import 'package:quiz/data/models/api_response.dart';
 import 'package:quiz/data/models/practice_excercise_model.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -12,16 +13,16 @@ abstract class ApiService {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         print("Request: ${options.method} ${options.uri}");
-        print("Headers: ${options.headers}");
-        print("Request Body: ${options.data}");
+        // print("Headers: ${options.headers}");
+        // print("Request Body: ${options.data}");
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        print("Response: ${response.statusCode} ${response.data}");
+        // print("Response: ${response.statusCode} ${response.data}");
         return handler.next(response); // continue
       },
       onError: (DioError e, handler) {
-        print("Error: ${e.message}");
+        // print("Error: ${e.message}");
         return handler.next(e); // continue
       },
     ));
@@ -42,7 +43,7 @@ abstract class ApiService {
   });
 
   @GET('/explore/v3/practice/topic-exercise-list')
-  Future<HttpResponse<List<PracticeExerciseModel>>> fetchExerciseData({
+  Future<HttpResponse<PracticeExerciseModelResponse>> fetchExerciseData({
     @Query("subject_id") required String subjectId,
     @Query("chapter_id") required String chapterId,
     @Query("program_id") required String programId,

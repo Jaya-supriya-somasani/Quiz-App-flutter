@@ -80,7 +80,7 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<HttpResponse<List<PracticeExerciseModel>>> fetchExerciseData({
+  Future<HttpResponse<PracticeExerciseModelResponse>> fetchExerciseData({
     required String subjectId,
     required String chapterId,
     required String programId,
@@ -104,7 +104,7 @@ class _ApiService implements ApiService {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<HttpResponse<List<PracticeExerciseModel>>>(Options(
+        _setStreamType<HttpResponse<PracticeExerciseModelResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -120,13 +120,10 @@ class _ApiService implements ApiService {
               _dio.options.baseUrl,
               baseUrl,
             )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<PracticeExerciseModel> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late PracticeExerciseModelResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              PracticeExerciseModel.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = PracticeExerciseModelResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

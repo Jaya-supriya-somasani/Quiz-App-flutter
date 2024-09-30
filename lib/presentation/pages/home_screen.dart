@@ -58,10 +58,11 @@ class _HomeScreen extends State<HomeScreen> {
             Expanded(
               child: BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
                 builder: (context, state) {
+                  // print("state.practiceExerciseEntity ${state.practiceExerciseEntity}");
                   if (state is GetPracticeExerciseLoadingState) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is GetPracticeExerciseErrorState) {
-                    return Center(child: Text('Error: ${state.error?.message ?? 'Unknown Error'}'));
+                    return Center(child: Text('Error: ${state.error ?? 'Unknown Error'}'));
                   } else if (state is GetPracticeExerciseLoadedState) {
                     return ListView.builder(
                       itemCount: state.exercises.length,

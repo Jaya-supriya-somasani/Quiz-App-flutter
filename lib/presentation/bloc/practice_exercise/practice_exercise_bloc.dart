@@ -1,3 +1,4 @@
+import 'package:dio/src/dio_exception.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/domain/entities/practice_exercise.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
@@ -16,22 +17,22 @@ class PracticeExerciseBloc
 
   void onGetPracticeExercise(
       GetPracticeExerciseDetails event,
-      Emitter<GetPracticeExerciseState> emit,
-      ) async {
+      Emitter<GetPracticeExerciseState> emit,) async {
     emit(const GetPracticeExerciseLoadingState());
+    final dataState = await _getPracticeExerciseUseCase();
+    print('jdhfdkjs - $dataState');
     try {
-      final dataState = await _getPracticeExerciseUseCase();
-      print('API call successful, details: $dataState');
+
+      print('API-call-state, details: $dataState--${dataState.data}');
+
       if (dataState is DataSuccessState<List<PracticeExerciseEntity>>) {
         emit(GetPracticeExerciseLoadedState(dataState.data!));
-        print('API call successful, details: ${dataState.data}');
-
       } else if (dataState is DataFailedState) {
-        emit(GetPracticeExerciseErrorState(dataState.error));
+        emit(GetPracticeExerciseErrorState(dataState.error?.message));
       }
     } catch (e) {
       print("Error in BLoC: $e");
-      emit(const GetPracticeExerciseErrorState(null));
+      emit(GetPracticeExerciseErrorState(e.toString())); // Provide a string error message
     }
   }
 }
