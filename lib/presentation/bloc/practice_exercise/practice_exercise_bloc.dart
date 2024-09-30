@@ -3,7 +3,6 @@ import 'package:quiz/domain/entities/practice_exercise.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_event.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_state.dart';
-import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
 import 'package:quiz/utils/data_state.dart';
 
 class PracticeExerciseBloc
@@ -22,9 +21,11 @@ class PracticeExerciseBloc
     emit(const GetPracticeExerciseLoadingState());
     try {
       final dataState = await _getPracticeExerciseUseCase();
-
+      print('API call successful, details: $dataState');
       if (dataState is DataSuccessState<List<PracticeExerciseEntity>>) {
         emit(GetPracticeExerciseLoadedState(dataState.data!));
+        print('API call successful, details: ${dataState.data}');
+
       } else if (dataState is DataFailedState) {
         emit(GetPracticeExerciseErrorState(dataState.error));
       }

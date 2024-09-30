@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/di.dart';
 import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
+import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_bloc.dart';
+import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_event.dart';
+import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_state.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
 import 'package:quiz/presentation/widgets/subject_card.dart';
 
@@ -15,6 +18,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<PracticeExerciseBloc>(context).add(
+      const GetPracticeExerciseDetails(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +53,30 @@ class _HomeScreen extends State<HomeScreen> {
               child: Text(
                 "Pick A Subject To Practice",
                 style: TextStyle(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
+                builder: (context, state) {
+                  if (state is GetPracticeExerciseLoadingState) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is GetPracticeExerciseErrorState) {
+                    return Center(child: Text('Error: ${state.error?.message ?? 'Unknown Error'}'));
+                  } else if (state is GetPracticeExerciseLoadedState) {
+                    return ListView.builder(
+                      itemCount: state.exercises.length,
+                      itemBuilder: (context, index) {
+                        final exercise = state.exercises[index];
+                        return ListTile(
+                          title: Text(exercise.totalQuestions.toString() ?? 'No Title'),
+                          subtitle: Text('Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions}'),
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(child: Text('No data available.'));
+                  }
+                },
               ),
             ),
             Row(
