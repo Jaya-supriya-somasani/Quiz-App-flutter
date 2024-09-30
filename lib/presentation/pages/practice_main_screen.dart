@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/presentation/bloc/practice_ques_bloc.dart';
-import 'package:quiz/presentation/bloc/practice_ques_event.dart';
-import 'package:quiz/presentation/bloc/practice_ques_state.dart';
+import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
+import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
+import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
 
 class PracticeMainScreen extends StatefulWidget {
   const PracticeMainScreen({super.key});
