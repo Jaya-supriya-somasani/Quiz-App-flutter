@@ -17,13 +17,9 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
       GetExamDetails event, Emitter<GetPracticeQuesState> emit) async {
     emit(const GetPracticeQuesLoadingState());
     try {
-      final dataState = await _getPracticeQuesUseCase();
-
-      if (dataState is DataSuccessState) {
-        emit(GetPracticeQuesLoadedState(dataState.data!));
-      } else if (dataState is DataFailedState) {
-        emit(GetPracticeQuesErrorState(dataState.error as DioError?));
-      }
+      final data = await _getPracticeQuesUseCase.call();
+      print("dsfjhsdgf - $data");
+        emit(GetPracticeQuesLoadedState(data));
     } catch (e) {
       print("Error in BLoC: $e");
       emit(const GetPracticeQuesErrorState(null));

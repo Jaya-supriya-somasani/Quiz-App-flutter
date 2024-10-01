@@ -29,13 +29,13 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
         final dataMap = response.response.data['data'];
 
         if (dataMap == null) {
-          return const DataFailedState("data is null");
+          return DataFailedState("data is null");
         }
 
         final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
         return DataSuccessState(practiceQuestion);
       } else {
-        return const DataFailedState("dfjhgd");
+        return DataFailedState("dfjhgd");
       }
     } catch (e) {
       print("Exception: $e");

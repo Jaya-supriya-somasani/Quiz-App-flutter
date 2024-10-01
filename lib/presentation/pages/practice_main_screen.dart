@@ -22,8 +22,16 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Screen')),
-      body: _makeApiCall(),
+      body: _createHeaderSection(),
+    );
+  }
+
+  Widget _createHeaderSection() {
+    return Column(
+      children: [
+        const SizedBox(height: 40),
+        _makeApiCall(),
+      ],
     );
   }
 
@@ -37,23 +45,28 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           return Center(child: Text('Error: ${state.error?.message}'));
         }
         if (state is GetPracticeQuesLoadedState) {
-          return ListView.builder(
-            itemCount: state.practiceQuestions.optionList?.length ?? 0,
-            itemBuilder: (context, index) {
-             return Column(
-               children: [
-                 Row(
-                   children: [
-                     Text("Q${state.practiceQuestions.questionNumber}"),
-                     Text("${state.practiceQuestions.questionType}")
-                   ],
-                 )
-               ],
-             );
-              // return ListTile(
-              //   title: Text(state.practiceQuestions.questionStatus.toString()),
-              // );
-            },
+          print("dskhfgsdhjfg - ${state.practiceQuestions.questionNumber}");
+          return Column(
+            children: [
+              Text("Q ${state.practiceQuestions.questionNumber}/13"),
+              Expanded( // Wrap ListView with Expanded
+                child: ListView.builder(
+                  itemCount: state.practiceQuestions.optionList?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text("Q ${state.practiceQuestions.questionNumber}"),
+                            Text("${state.practiceQuestions.questionType}"),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         }
         return const SizedBox();
