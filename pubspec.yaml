@@ -39,6 +39,7 @@ flutter:
 
   assets:
     - assets/subjects_bg.svg
+    - assets/x_close.svg
   #   - images/a_dot_ham.jpeg
 
   # For details regarding adding assets from package dependencies, see

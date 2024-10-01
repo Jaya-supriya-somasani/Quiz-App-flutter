@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
@@ -45,27 +46,48 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           return Center(child: Text('Error: ${state.error?.message}'));
         }
         if (state is GetPracticeQuesLoadedState) {
-          print("dskhfgsdhjfg - ${state.practiceQuestions.questionNumber}");
+          print("questionData---${state.practiceQuestions.questionData}");
+
           return Column(
             children: [
-              Text("Q ${state.practiceQuestions.questionNumber}/13"),
-              Expanded( // Wrap ListView with Expanded
-                child: ListView.builder(
-                  itemCount: state.practiceQuestions.optionList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text("Q ${state.practiceQuestions.questionNumber}"),
-                            Text("${state.practiceQuestions.questionType}"),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
+              Padding(padding: const EdgeInsets.only(left: 10,right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Q ${state.practiceQuestions.questionNumber}/13",),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",),
+                      Container(
+                        child: Padding(padding: const EdgeInsets.all(0),child: SvgPicture.asset(
+                          'assets/x_close.svg',
+                          fit: BoxFit.cover,
+                          height: 25,
+                        ),)
+                      )
+                    ],
+                  ),
+                  Text("${state.practiceQuestions.questionData}"),
+                ],
+              ),),
+              // Expanded(
+              //   child: ListView.builder(
+              //     itemCount: state.practiceQuestions.optionList?.length ?? 0,
+              //     itemBuilder: (context, index) {
+              //       return Column(
+              //         children: [
+              //           Row(
+              //             children: [
+              //               Text("Q ${state.practiceQuestions.questionNumber}"),
+              //               Text("${state.practiceQuestions.questionType}"),
+              //             ],
+              //           ),
+              //         ],
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           );
         }
