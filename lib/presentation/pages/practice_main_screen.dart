@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
@@ -50,27 +51,44 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
 
           return Column(
             children: [
-              Padding(padding: const EdgeInsets.only(left: 10,right: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Q ${state.practiceQuestions.questionNumber}/13",),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",),
-                      Container(
-                        child: Padding(padding: const EdgeInsets.all(0),child: SvgPicture.asset(
-                          'assets/x_close.svg',
-                          fit: BoxFit.cover,
-                          height: 25,
-                        ),)
-                      )
-                    ],
-                  ),
-                  Text("${state.practiceQuestions.questionData}"),
-                ],
-              ),),
+              Padding(
+                padding: const EdgeInsets.only(left: 10, right: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Q ${state.practiceQuestions.questionNumber}/13"),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${state.practiceQuestions.questionType} ${state
+                              .practiceQuestions.questionStatus}",
+                        ),
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(0),
+                            child: SvgPicture.asset(
+                              'assets/x_close.svg',
+                              fit: BoxFit.cover,
+                              height: 25,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // Use the Html widget to render the question data
+                    Html(
+                      data: state.practiceQuestions.questionData,
+                      style: {
+                        "p": Style(
+                          fontSize: FontSize(16), // Adjust font size
+                          margin: Margins.zero, // Remove default margin
+                        ),
+                      },
+                    ),
+                  ],
+                ),
+              ),
               // Expanded(
               //   child: ListView.builder(
               //     itemCount: state.practiceQuestions.optionList?.length ?? 0,

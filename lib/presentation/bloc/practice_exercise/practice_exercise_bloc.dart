@@ -20,7 +20,6 @@ class PracticeExerciseBloc
     emit(const GetPracticeExerciseLoadingState());
     try {
       final data = await _getPracticeExerciseUseCase.call();
-      print("dsfjhsdgf - $data");
       emit(GetPracticeExerciseLoadedState(data));
     } catch (e) {
       print("Error in BLoC: $e");

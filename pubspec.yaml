@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.7
+  flutter_svg: ^2.0.10+1
 
   cupertino_icons: ^1.0.8
   #comparing dart object
@@ -23,6 +23,8 @@ dependencies:
   #state management
   flutter_bloc: ^8.1.6
 
+  flutter_math_fork: ^0.7.2
+  flutter_html: ^3.0.0-beta.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
