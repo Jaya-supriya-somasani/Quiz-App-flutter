@@ -13,27 +13,22 @@ class PracticeExerciseBloc
 
   PracticeExerciseBloc(this._getPracticeExerciseUseCase)
       : super(const GetPracticeExerciseLoadingState()) {
-    on<GetPracticeExerciseDetails>(onGetPracticeExercise);
+    on<GetPracticeExerciseDetails>(_onGetPracticeExercise);
   }
 
-  void onGetPracticeExercise(
-      GetPracticeExerciseDetails event,
-      Emitter<GetPracticeExerciseState> emit,) async {
+  void _onGetPracticeExercise(
+    GetPracticeExerciseDetails event,
+    Emitter<GetPracticeExerciseState> emit,
+  ) async {
     emit(const GetPracticeExerciseLoadingState());
-    final dataState = await _getPracticeExerciseUseCase();
-    print('jdhfdkjs - $dataState');
     try {
-
-      print('API-call-state, details: $dataState--${dataState.data}');
-
-      if (dataState is DataSuccessState<List<PracticeExerciseEntity>>) {
-        emit(GetPracticeExerciseLoadedState(dataState.data!));
-      } else if (dataState is DataFailedState) {
-        emit(GetPracticeExerciseErrorState(dataState.error));
-      }
+      final data = await _getPracticeExerciseUseCase.call();
+      print("dsfjhsdgf - $data");
+      emit(GetPracticeExerciseLoadedState(data));
     } catch (e) {
       print("Error in BLoC: $e");
-      emit(GetPracticeExerciseErrorState(e.toString())); // Provide a string error message
+      emit(GetPracticeExerciseErrorState(
+          e.toString())); // Provide a string error message
     }
   }
 }

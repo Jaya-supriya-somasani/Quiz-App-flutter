@@ -1,16 +1,13 @@
 import 'package:dio/dio.dart';
 
-abstract class DataState<T> {
-  final dynamic data;
-  final String? error;
-
-  const DataState({this.data, this.error});
-}
+abstract class DataState<T> {}
 
 class DataSuccessState<T> extends DataState<T> {
-  const DataSuccessState(T data) : super(data: data);
+  final T data;
+  DataSuccessState(this.data);
 }
 
 class DataFailedState<T> extends DataState<T> {
-  const DataFailedState(String error) : super(error: error);
+  final String error;
+  DataFailedState(this.error);
 }

@@ -1,9 +1,10 @@
 import 'package:quiz/data/models/practice_excercise_model.dart';
+import 'package:quiz/domain/entities/practice_exercise.dart';
 
 class PracticeExerciseModelResponse {
   final String status;
   final String message;
-  final List<PracticeExerciseModel> data;
+  final List<PracticeExerciseEntity> data;
   final String? errorCode;
 
   PracticeExerciseModelResponse({
@@ -18,7 +19,7 @@ class PracticeExerciseModelResponse {
       status: json['status'],
       message: json['message'],
       data: (json['data'] as List)
-          .map((e) => PracticeExerciseModel.fromJson(e))
+          .map((e) => PracticeExerciseEntity.fromJson(e))
           .toList(),
       errorCode: json['errorCode'],
     );

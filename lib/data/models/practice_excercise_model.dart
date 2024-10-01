@@ -1,7 +1,7 @@
 
 import 'package:quiz/domain/entities/practice_exercise.dart';
 
-class PracticeExerciseModel extends PracticeExerciseEntity{
+class PracticeExerciseModel {
   final String? practiceFormatId;
   final String? practiceFormat;
   final int? sortOrder;

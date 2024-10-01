@@ -2,6 +2,4 @@ abstract class PracticeExerciseEvent {
   const PracticeExerciseEvent();
 }
 
-class GetPracticeExerciseDetails extends PracticeExerciseEvent {
-  const GetPracticeExerciseDetails();
-}
+class GetPracticeExerciseDetails extends PracticeExerciseEvent {}

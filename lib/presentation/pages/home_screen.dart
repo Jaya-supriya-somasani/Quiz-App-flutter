@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/data/repositories/practice_exercise_repo_imp.dart';
 import 'package:quiz/di.dart';
+import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
 import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_event.dart';
@@ -18,12 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
+  late PracticeExerciseBloc _practiceExerciseBloc;
+
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PracticeExerciseBloc>(context).add(
-      const GetPracticeExerciseDetails(),
-    );
+    _practiceExerciseBloc = PracticeExerciseBloc(
+        GetPracticeExerciseUseCase(sl.get<PracticeExerciseRepoImp>()));
+    _practiceExerciseBloc.add(GetPracticeExerciseDetails());
   }
 
   @override
@@ -56,29 +60,41 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             Expanded(
-              child: BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
-                builder: (context, state) {
-                  // print("state.practiceExerciseEntity ${state.practiceExerciseEntity}");
-                  if (state is GetPracticeExerciseLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is GetPracticeExerciseErrorState) {
-                    return Center(child: Text('Error: ${state.error ?? 'Unknown Error'}'));
-                  } else if (state is GetPracticeExerciseLoadedState) {
-                    return ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        final exercise = state.exercises[index];
-                        return ListTile(
-                          title: Text(exercise.totalQuestions.toString() ?? 'No Title'),
-                          subtitle: Text('Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions}'),
-                        );
-                      },
-                    );
-                  } else {
-                    return const Center(child: Text('No data available.'));
-                  }
-                },
-              ),
+              child:
+                  BlocProvider(
+                    create: (_) => _practiceExerciseBloc,
+                    child: BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
+                                    builder: (context, state) {
+                    print(state);
+                    // print("state.practiceExerciseEntity ${state.practiceExerciseEntity}");
+                    if (state is GetPracticeExerciseLoadingState) {
+                      print(state);
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is GetPracticeExerciseErrorState) {
+                      print(state);
+                      return Center(
+                          child:
+                              Text('Error: ${state.error ?? 'Unknown Error'}'));
+                    } else if (state is GetPracticeExerciseLoadedState) {
+                      print("sdfdsf- ${state.exercises.toString()}");
+                      return ListView.builder(
+                        itemCount: 2,
+                        itemBuilder: (context, index) {
+                          final exercise = state.exercises[index];
+                          return ListTile(
+                            title: Text(
+                                exercise.totalQuestions.toString() ?? 'No Title'),
+                            subtitle: Text(
+                                'Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions}'),
+                          );
+                        },
+                      );
+                    } else {
+                      return const Center(child: Text('No data available.'));
+                    }
+                                    },
+                                  ),
+                  ),
             ),
             Row(
               children: [

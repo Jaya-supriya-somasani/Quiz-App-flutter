@@ -6,15 +6,19 @@ import 'package:quiz/utils/usecase.dart';
 import '../entities/practice_exercise.dart';
 
 class GetPracticeExerciseUseCase
-    implements UseCase<DataState<List<PracticeExerciseEntity>>, void> {
+    implements UseCase<List<PracticeExerciseEntity>, void> {
   final PracticeExerciseRepo _practiceExerciseRepo;
 
   const GetPracticeExerciseUseCase(this._practiceExerciseRepo);
 
   @override
-  Future<DataState<List<PracticeExerciseEntity>>> call({void params}) async{
+  Future<List<PracticeExerciseEntity>> call({void params}) async{
     final data =await _practiceExerciseRepo.getPracticeExerciseData();
-    print("usecase-data $data");
-    return data;
+    if (data is DataSuccessState<PracticeExerciseModelResponse>) {
+      final listData = data.data.data;
+      return listData;
+    } else {
+      throw Exception("Error in Usecase Exercises");
+    }
   }
 }
