@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
@@ -15,6 +15,8 @@ class PracticeMainScreen extends StatefulWidget {
 }
 
 class _PracticeMainScreen extends State<PracticeMainScreen> {
+  String? _selectedAnswer;
+
   @override
   void initState() {
     super.initState();
@@ -61,8 +63,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${state.practiceQuestions.questionType} ${state
-                              .practiceQuestions.questionStatus}",
+                          "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
                         ),
                         Container(
                           child: Padding(
@@ -76,36 +77,49 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                         ),
                       ],
                     ),
-                    // Use the Html widget to render the question data
                     Html(
                       data: state.practiceQuestions.questionData,
                       style: {
                         "p": Style(
-                          fontSize: FontSize(16), // Adjust font size
-                          margin: Margins.zero, // Remove default margin
+                          fontSize: FontSize(16),
+                          margin: Margins.zero,
                         ),
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.practiceQuestions.optionList?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        final optionHtml = state.practiceQuestions.optionList![index];
+
+                        if (optionHtml.optionId == null) {
+                          return const SizedBox();
+                        }
+
+                        return RadioListTile<String>(
+                          title: Html(
+                            data: optionHtml.optionData, // Render the option HTML
+                            style: {
+                              "p": Style(
+                                margin: Margins.zero,
+                              ),
+                            },
+                          ),
+                          value: optionHtml.optionId!,
+                          groupValue: _selectedAnswer,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedAnswer = value;
+                            });
+                          },
+                        );
                       },
                     ),
                   ],
                 ),
               ),
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: state.practiceQuestions.optionList?.length ?? 0,
-              //     itemBuilder: (context, index) {
-              //       return Column(
-              //         children: [
-              //           Row(
-              //             children: [
-              //               Text("Q ${state.practiceQuestions.questionNumber}"),
-              //               Text("${state.practiceQuestions.questionType}"),
-              //             ],
-              //           ),
-              //         ],
-              //       );
-              //     },
-              //   ),
-              // ),
             ],
           );
         }
