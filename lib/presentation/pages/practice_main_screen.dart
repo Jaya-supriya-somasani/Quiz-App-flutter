@@ -57,8 +57,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           print("questionData---${state.practiceQuestions.questionData}");
           print(
               "current_question init bloc----${state.practiceQuestions.questionNumber}");
-          currentQuestion =
-             (state.practiceQuestions.questionNumber ?? "1");
+          currentQuestion = state.practiceQuestions.questionNumber!;
 
           return SingleChildScrollView(
             child: Padding(
@@ -152,21 +151,21 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         children: [
           OutlinedButton(
             onPressed: () {
-              final decrement = int.parse(currentQuestion) - 1;
               setState(() {
-                decrement;
+                currentQuestion=(int.parse(currentQuestion) - 1).toString();
               });
-              _fetchQuestionNumber(decrement.toString());
+              _fetchQuestionNumber(currentQuestion);
             },
             child: const Text("Previous"),
           ),
           FilledButton(
             onPressed: () {
               final increment = int.parse(currentQuestion) + 1;
+              print("currentQuestion $increment");
               setState(() {
-                increment;
+                currentQuestion=(int.parse(currentQuestion) + 1).toString();
               });
-              _fetchQuestionNumber(increment.toString());
+              _fetchQuestionNumber(currentQuestion);
             },
             child: const Text("Skip"),
           ),
