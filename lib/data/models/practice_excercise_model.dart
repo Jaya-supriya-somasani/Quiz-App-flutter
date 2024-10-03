@@ -1,6 +1,3 @@
-
-import 'package:quiz/domain/entities/practice_exercise.dart';
-
 class PracticeExerciseModel {
   final String? practiceFormatId;
   final String? practiceFormat;
@@ -28,7 +25,7 @@ class PracticeExerciseModel {
   final String? practiceType;
   final Assets? assets;
 
-   PracticeExerciseModel({
+  PracticeExerciseModel({
     this.practiceFormatId,
     this.practiceFormat,
     this.sortOrder,
@@ -122,21 +119,21 @@ class Assets {
 
   @override
   List<Object?> get props => [
-    chapterIcon,
-    subjectIcon,
-    practiceCard,
-    primaryColor,
-    tertiaryColor,
-    secondaryColor,
-    ekidsChapterIcon,
-    ekidsSubjectIcon,
-    ekidsPracticeCard,
-    primaryColorRange,
-    assignmentThumbnail,
-    secondaryColorRange,
-    ekidsLiveclassThumbnail,
-    ekidsAssignmentThumbnail,
-  ];
+        chapterIcon,
+        subjectIcon,
+        practiceCard,
+        primaryColor,
+        tertiaryColor,
+        secondaryColor,
+        ekidsChapterIcon,
+        ekidsSubjectIcon,
+        ekidsPracticeCard,
+        primaryColorRange,
+        assignmentThumbnail,
+        secondaryColorRange,
+        ekidsLiveclassThumbnail,
+        ekidsAssignmentThumbnail,
+      ];
 
   factory Assets.fromJson(Map<String, dynamic> json) {
     return Assets(
@@ -151,13 +148,13 @@ class Assets {
       ekidsPracticeCard: json['ekids_practice_card'],
       primaryColorRange: Map<String, String>.from(json['primary_color_range']),
       assignmentThumbnail: json['assignment_thumbnail'],
-      secondaryColorRange: Map<String, String>.from(json['secondary_color_range']),
+      secondaryColorRange:
+          Map<String, String>.from(json['secondary_color_range']),
       ekidsLiveclassThumbnail: json['ekids_liveclass_thumbnail'],
       ekidsAssignmentThumbnail: json['ekids_assignment_thumbnail'],
     );
   }
 }
-
 
 class ColorRange {
   final String start;

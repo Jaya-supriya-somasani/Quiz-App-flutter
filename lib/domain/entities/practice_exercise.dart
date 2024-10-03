@@ -1,5 +1,3 @@
-
-
 class PracticeExerciseEntity {
   final String subjectId;
   final String subjectName;
@@ -30,7 +28,7 @@ class PracticeExerciseEntity {
       chapterName: json['chapter_name'],
       chapterImageUrl: json['chapter_image_url'] ?? '',
       totalQuestions: json['total_questions'],
-      completedQuestion: json['completed_questions']??'',
+      completedQuestion: json['completed_questions'] ?? '',
       // Initialize other fields as necessary
     );
   }

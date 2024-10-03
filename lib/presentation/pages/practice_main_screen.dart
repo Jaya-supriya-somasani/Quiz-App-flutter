@@ -8,7 +8,8 @@ import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
 
 class PracticeMainScreen extends StatefulWidget {
-  const PracticeMainScreen({super.key,required this.completedQuestions});
+  const PracticeMainScreen({super.key, required this.completedQuestions});
+
   final int? completedQuestions;
 
   @override
@@ -22,7 +23,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   @override
   void initState() {
     super.initState();
-    currentQuestion=(widget.completedQuestions!+1).toString();
+    currentQuestion = (widget.completedQuestions! + 1).toString();
     _fetchQuestionNumber(currentQuestion);
   }
 
@@ -149,7 +150,8 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           OutlinedButton(
             onPressed: () {
               setState(() {
-                currentQuestion=(int.parse(currentQuestion) - 1).toString();
+                currentQuestion = (int.parse(currentQuestion) - 1).toString();
+                _selectedAnswer = null;
               });
               _fetchQuestionNumber(currentQuestion);
             },
@@ -157,10 +159,9 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           ),
           FilledButton(
             onPressed: () {
-              final increment = int.parse(currentQuestion) + 1;
-              print("currentQuestion $increment");
               setState(() {
-                currentQuestion=(int.parse(currentQuestion) + 1).toString();
+                currentQuestion = (int.parse(currentQuestion) + 1).toString();
+                _selectedAnswer = null;
               });
               _fetchQuestionNumber(currentQuestion);
             },
