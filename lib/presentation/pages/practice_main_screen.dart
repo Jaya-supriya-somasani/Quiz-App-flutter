@@ -72,10 +72,15 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(0),
-                        child: SvgPicture.asset(
-                          'assets/x_close.svg',
-                          fit: BoxFit.cover,
-                          height: 25,
+                        child: GestureDetector(
+                          child: SvgPicture.asset(
+                            'assets/x_close.svg',
+                            fit: BoxFit.cover,
+                            height: 25,
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                         ),
                       ),
                     ],
