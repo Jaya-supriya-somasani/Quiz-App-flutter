@@ -26,16 +26,15 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _createHeaderSection(),
-    );
-  }
-
-  Widget _createHeaderSection() {
-    return Column(
-      children: [
-        const SizedBox(height: 40),
-        _makeApiCall(),
-      ],
+      body: Column(
+        children: [
+          const SizedBox(height: 40),
+          Expanded(
+            child: _makeApiCall(), // Makes the content scrollable
+          ),
+          _buildBottomButtons(), // Fixed buttons at the bottom
+        ],
+      ),
     );
   }
 
@@ -51,80 +50,110 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         if (state is GetPracticeQuesLoadedState) {
           print("questionData---${state.practiceQuestions.questionData}");
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Q ${state.practiceQuestions.questionNumber}/13"),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Q ${state.practiceQuestions.questionNumber}/13"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0),
+                        child: SvgPicture.asset(
+                          'assets/x_close.svg',
+                          fit: BoxFit.cover,
+                          height: 25,
                         ),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(0),
-                            child: SvgPicture.asset(
-                              'assets/x_close.svg',
-                              fit: BoxFit.cover,
-                              height: 25,
+                      ),
+                    ],
+                  ),
+                  Html(
+                    data: state.practiceQuestions.questionData,
+                    style: {
+                      "p": Style(
+                        fontSize: FontSize(16),
+                        margin: Margins.zero,
+                      ),
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: state.practiceQuestions.optionList?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final optionHtml =
+                          state.practiceQuestions.optionList![index];
+
+                      if (optionHtml.optionId == null) {
+                        return const SizedBox();
+                      }
+
+                      return RadioListTile<String>(
+                        title: Html(
+                          data: optionHtml.optionData, // Render the option HTML
+                          style: {
+                            "p": Style(
+                              margin: Margins.zero,
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Html(
-                      data: state.practiceQuestions.questionData,
-                      style: {
-                        "p": Style(
-                          fontSize: FontSize(16),
-                          margin: Margins.zero,
-                        ),
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.practiceQuestions.optionList?.length ?? 0,
-                      itemBuilder: (context, index) {
-                        final optionHtml = state.practiceQuestions.optionList![index];
-
-                        if (optionHtml.optionId == null) {
-                          return const SizedBox();
-                        }
-
-                        return RadioListTile<String>(
-                          title: Html(
-                            data: optionHtml.optionData, // Render the option HTML
-                            style: {
-                              "p": Style(
-                                margin: Margins.zero,
-                              ),
-                            },
-                          ),
-                          value: optionHtml.optionId!,
-                          groupValue: _selectedAnswer,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedAnswer = value;
-                            });
                           },
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                        ),
+                        value: optionHtml.optionId!,
+                        groupValue: _selectedAnswer,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedAnswer = value;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         }
         return const SizedBox();
       },
+    );
+  }
+
+  Widget _buildBottomButtons() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          OutlinedButton(
+            onPressed: () {
+              print("Previous");
+            },
+            child: const Text("Previous"),
+          ),
+          FilledButton(
+            onPressed: () {
+              print("Skip");
+            },
+            child: const Text("Skip"),
+          ),
+        ],
+      ),
     );
   }
 }
