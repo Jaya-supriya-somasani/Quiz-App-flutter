@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
 
-import '../../data/models/practice_excercise_model.dart';
 
 class PracticeExerciseEntity {
   final String subjectId;
@@ -10,7 +8,7 @@ class PracticeExerciseEntity {
   final String chapterName;
   final String chapterImageUrl;
   final int totalQuestions;
-  // Add other fields as necessary
+  final int completedQuestion;
 
   PracticeExerciseEntity({
     required this.subjectId,
@@ -20,6 +18,7 @@ class PracticeExerciseEntity {
     required this.chapterName,
     required this.chapterImageUrl,
     required this.totalQuestions,
+    required this.completedQuestion,
   });
 
   factory PracticeExerciseEntity.fromJson(Map<String, dynamic> json) {
@@ -31,6 +30,7 @@ class PracticeExerciseEntity {
       chapterName: json['chapter_name'],
       chapterImageUrl: json['chapter_image_url'] ?? '',
       totalQuestions: json['total_questions'],
+      completedQuestion: json['completed_questions']??'',
       // Initialize other fields as necessary
     );
   }

@@ -8,7 +8,8 @@ import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
 
 class PracticeMainScreen extends StatefulWidget {
-  const PracticeMainScreen({super.key});
+  const PracticeMainScreen({super.key,required this.completedQuestions});
+  final int? completedQuestions;
 
   @override
   State<StatefulWidget> createState() => _PracticeMainScreen();
@@ -16,11 +17,13 @@ class PracticeMainScreen extends StatefulWidget {
 
 class _PracticeMainScreen extends State<PracticeMainScreen> {
   String? _selectedAnswer;
-  String currentQuestion = '1';
+  late String currentQuestion;
 
   @override
   void initState() {
     super.initState();
+    currentQuestion=(widget.completedQuestions!+1).toString();
+    print("initState $currentQuestion");
     _fetchQuestionNumber(currentQuestion);
   }
 
@@ -57,7 +60,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           print("questionData---${state.practiceQuestions.questionData}");
           print(
               "current_question init bloc----${state.practiceQuestions.questionNumber}");
-          currentQuestion = state.practiceQuestions.questionNumber!;
+          // currentQuestion = state.practiceQuestions.questionNumber!;
 
           return SingleChildScrollView(
             child: Padding(
@@ -65,7 +68,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Q ${state.practiceQuestions.questionNumber}/13"),
+                  Text("Q $currentQuestion/13"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

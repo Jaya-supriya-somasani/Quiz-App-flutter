@@ -30,6 +30,7 @@ class _HomeScreen extends State<HomeScreen> {
     _practiceExerciseBloc.add(GetPracticeExerciseDetails());
   }
 
+  var completedQues=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,11 +82,13 @@ class _HomeScreen extends State<HomeScreen> {
                         itemCount: 2,
                         itemBuilder: (context, index) {
                           final exercise = state.exercises[index];
+                          completedQues=exercise.completedQuestion;
+
                           return ListTile(
                             title: Text(
                                 exercise.totalQuestions.toString() ?? 'No Title'),
                             subtitle: Text(
-                                'Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions}'),
+                                'Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions} completedQuestion :  ${exercise.completedQuestion}'),
                           );
                         },
                       );
@@ -104,6 +107,7 @@ class _HomeScreen extends State<HomeScreen> {
                   topicsCount: "1/10 Topics",
                   questionCount: "25/34 Qs",
                   onTap: () {
+                    print("home- completed ques$completedQues");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -111,7 +115,7 @@ class _HomeScreen extends State<HomeScreen> {
                           create: (context) => PracticeQuesBloc(
                             sl<GetPracticeQuesUseCase>(),
                           ),
-                          child: const PracticeMainScreen(),
+                          child: PracticeMainScreen(completedQuestions: 5??0),
                         ),
                       ),
                     );
