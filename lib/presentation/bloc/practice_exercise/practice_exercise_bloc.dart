@@ -18,11 +18,11 @@ class PracticeExerciseBloc
     Emitter<GetPracticeExerciseState> emit,
   ) async {
     emit(const GetPracticeExerciseLoadingState());
+    final data = await _getPracticeExerciseUseCase.call();
     try {
-      final data = await _getPracticeExerciseUseCase.call();
       emit(GetPracticeExerciseLoadedState(data));
     } catch (e) {
-      print("Error in BLoC: $e");
+      print("Error in exercise BLoC: $e");
       emit(GetPracticeExerciseErrorState(
           e.toString())); // Provide a string error message
     }

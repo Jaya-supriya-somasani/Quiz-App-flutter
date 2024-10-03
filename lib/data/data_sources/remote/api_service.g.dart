@@ -26,7 +26,7 @@ class _ApiService implements ApiService {
   @override
   Future<HttpResponse<PracticeQuesModel>> fetchTopicExerciseQuestion({
     required String practiceFormatId,
-    required int questionNumber,
+    required String questionNumber,
     required bool isPrevious,
     required String programId,
     required String subjectId,

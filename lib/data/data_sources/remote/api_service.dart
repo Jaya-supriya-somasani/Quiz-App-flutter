@@ -32,7 +32,7 @@ abstract class ApiService {
   @GET('/explore/v3/practice/topic-test-question')
   Future<HttpResponse<PracticeQuesModel>> fetchTopicExerciseQuestion({
     @Query("practice_format_id") required String practiceFormatId,
-    @Query("question_number") required int questionNumber,
+    @Query("question_number") required String questionNumber,
     @Query("is_previous") required bool isPrevious,
     @Query("program_id") required String programId,
     @Query("subject_id") required String subjectId,

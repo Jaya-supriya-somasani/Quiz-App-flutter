@@ -16,11 +16,17 @@ class PracticeMainScreen extends StatefulWidget {
 
 class _PracticeMainScreen extends State<PracticeMainScreen> {
   String? _selectedAnswer;
+  String currentQuestion = '1';
 
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PracticeQuesBloc>(context).add(const GetExamDetails());
+    _fetchQuestionNumber(currentQuestion);
+  }
+
+  void _fetchQuestionNumber(String questionNumber) {
+    BlocProvider.of<PracticeQuesBloc>(context)
+        .add(GetExamDetails(currentQuestion));
   }
 
   @override
@@ -49,6 +55,10 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         }
         if (state is GetPracticeQuesLoadedState) {
           print("questionData---${state.practiceQuestions.questionData}");
+          print(
+              "current_question init bloc----${state.practiceQuestions.questionNumber}");
+          currentQuestion =
+             (state.practiceQuestions.questionNumber ?? "1");
 
           return SingleChildScrollView(
             child: Padding(
@@ -142,13 +152,21 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         children: [
           OutlinedButton(
             onPressed: () {
-              print("Previous");
+              final decrement = int.parse(currentQuestion) - 1;
+              setState(() {
+                decrement;
+              });
+              _fetchQuestionNumber(decrement.toString());
             },
             child: const Text("Previous"),
           ),
           FilledButton(
             onPressed: () {
-              print("Skip");
+              final increment = int.parse(currentQuestion) + 1;
+              setState(() {
+                increment;
+              });
+              _fetchQuestionNumber(increment.toString());
             },
             child: const Text("Skip"),
           ),

@@ -3,5 +3,6 @@ abstract class PracticeQuesEvent {
 }
 
 class GetExamDetails extends PracticeQuesEvent {
-  const GetExamDetails();
+  final String getCurrentQuestion;
+  const GetExamDetails(this.getCurrentQuestion);
 }

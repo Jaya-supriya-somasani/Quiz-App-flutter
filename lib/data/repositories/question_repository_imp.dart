@@ -11,34 +11,37 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
   PracticeQuesRepositoryImp(this._apiService);
 
   @override
-  Future<DataState<PracticeQuesModel>> getPracticeQuestions() async {
-    try {
-      final response = await _apiService.fetchTopicExerciseQuestion(
-        practiceFormatId: practiceFormatId,
-        questionNumber: questionNumber,
-        isPrevious: isPrevious,
-        programId: programId,
-        subjectId: subjectId,
-        chapterId: chapterId,
-        bearerToken: bearerToken,
-        admissionNumber: admissionNumber,
-        courseId: courseId,
-      );
+  Future<DataState<PracticeQuesModel>> getPracticeQuestions({required String questionNumber}) async {
+    print("current_question in implementation $questionNumber ${questionNumber.runtimeType}");
 
+    final response = await _apiService.fetchTopicExerciseQuestion(
+      practiceFormatId: practiceFormatId,
+      questionNumber: questionNumber,
+      isPrevious: isPrevious,
+      programId: programId,
+      subjectId: subjectId,
+      chapterId: chapterId,
+      bearerToken: bearerToken,
+      admissionNumber: admissionNumber,
+      courseId: courseId,
+    );
+
+    print("current_question question_repo impl${questionNumber.runtimeType}");
+    try {
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
 
         if (dataMap == null) {
-          return DataFailedState("data is null");
+          return DataFailedState("Data is null");
         }
-
+        print("Data received: $dataMap");
         final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
         return DataSuccessState(practiceQuestion);
       } else {
-        return DataFailedState("dfjhgd");
+        return DataFailedState("Response status: ${response.response.statusCode}");
       }
     } catch (e) {
-      print("Exception: $e");
+      print("Exception in question repo impl: $e");
       return DataFailedState(e.toString());
     }
   }
