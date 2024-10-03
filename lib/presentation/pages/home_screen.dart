@@ -30,7 +30,8 @@ class _HomeScreen extends State<HomeScreen> {
     _practiceExerciseBloc.add(GetPracticeExerciseDetails());
   }
 
-  var completedQues=0;
+  var completedQues = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,13 +62,12 @@ class _HomeScreen extends State<HomeScreen> {
               ),
             ),
             Expanded(
-              child:
-                  BlocProvider(
-                    create: (_) => _practiceExerciseBloc,
-                    child: BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
-                                    builder: (context, state) {
+              child: BlocProvider(
+                create: (_) => _practiceExerciseBloc,
+                child:
+                    BlocBuilder<PracticeExerciseBloc, GetPracticeExerciseState>(
+                  builder: (context, state) {
                     print(state);
-                    // print("state.practiceExerciseEntity ${state.practiceExerciseEntity}");
                     if (state is GetPracticeExerciseLoadingState) {
                       print(state);
                       return const Center(child: CircularProgressIndicator());
@@ -77,16 +77,14 @@ class _HomeScreen extends State<HomeScreen> {
                           child:
                               Text('Error: ${state.error ?? 'Unknown Error'}'));
                     } else if (state is GetPracticeExerciseLoadedState) {
-                      print("sdfdsf- ${state.exercises.toString()}");
                       return ListView.builder(
                         itemCount: 2,
                         itemBuilder: (context, index) {
                           final exercise = state.exercises[index];
-                          completedQues=exercise.completedQuestion;
+                          completedQues = exercise.completedQuestion;
 
                           return ListTile(
-                            title: Text(
-                                exercise.totalQuestions.toString() ?? 'No Title'),
+                            title: Text(exercise.totalQuestions.toString()),
                             subtitle: Text(
                                 'Topics: ${exercise.chapterName}, Questions: ${exercise.totalQuestions} completedQuestion :  ${exercise.completedQuestion}'),
                           );
@@ -95,9 +93,9 @@ class _HomeScreen extends State<HomeScreen> {
                     } else {
                       return const Center(child: Text('No data available.'));
                     }
-                                    },
-                                  ),
-                  ),
+                  },
+                ),
+              ),
             ),
             Row(
               children: [
@@ -115,7 +113,7 @@ class _HomeScreen extends State<HomeScreen> {
                           create: (context) => PracticeQuesBloc(
                             sl<GetPracticeQuesUseCase>(),
                           ),
-                          child: PracticeMainScreen(completedQuestions: 5??0),
+                          child: PracticeMainScreen(completedQuestions: 5 ?? 0),
                         ),
                       ),
                     );

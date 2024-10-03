@@ -25,7 +25,7 @@ class PracticeExerciseEntity {
     return PracticeExerciseEntity(
       subjectId: json['subject_id'],
       subjectName: json['subject_name'],
-      subjectImageUrl: json['subject_image_url'] ?? '', // Handle null values
+      subjectImageUrl: json['subject_image_url'] ?? '',
       chapterId: json['chapter_id'],
       chapterName: json['chapter_name'],
       chapterImageUrl: json['chapter_image_url'] ?? '',

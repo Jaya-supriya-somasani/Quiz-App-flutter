@@ -23,7 +23,6 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   void initState() {
     super.initState();
     currentQuestion=(widget.completedQuestions!+1).toString();
-    print("initState $currentQuestion");
     _fetchQuestionNumber(currentQuestion);
   }
 
@@ -39,9 +38,9 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         children: [
           const SizedBox(height: 40),
           Expanded(
-            child: _makeApiCall(), // Makes the content scrollable
+            child: _makeApiCall(),
           ),
-          _buildBottomButtons(), // Fixed buttons at the bottom
+          _buildBottomButtons(),
         ],
       ),
     );
@@ -57,11 +56,6 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
           return Center(child: Text('Error: ${state.error?.message}'));
         }
         if (state is GetPracticeQuesLoadedState) {
-          print("questionData---${state.practiceQuestions.questionData}");
-          print(
-              "current_question init bloc----${state.practiceQuestions.questionNumber}");
-          // currentQuestion = state.practiceQuestions.questionNumber!;
-
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 16),
@@ -109,7 +103,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
 
                       return RadioListTile<String>(
                         title: Html(
-                          data: optionHtml.optionData, // Render the option HTML
+                          data: optionHtml.optionData,
                           style: {
                             "p": Style(
                               margin: Margins.zero,
