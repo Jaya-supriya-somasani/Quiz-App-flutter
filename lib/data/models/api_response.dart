@@ -1,4 +1,3 @@
-import 'package:quiz/data/models/practice_excercise_model.dart';
 import 'package:quiz/domain/entities/practice_exercise.dart';
 
 class PracticeExerciseModelResponse {
