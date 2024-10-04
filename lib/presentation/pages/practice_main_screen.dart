@@ -116,6 +116,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                         value: optionHtml.optionId!,
                         groupValue: _selectedAnswer,
                         onChanged: (value) {
+                          BlocProvider.of<PracticeQuesBloc>(context).add(SelectAnswer(value!));
                           setState(() {
                             _selectedAnswer = value;
                           });
@@ -134,43 +135,58 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   }
 
   Widget _buildBottomButtons() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            spreadRadius: 1,
-            blurRadius: 5,
+    return BlocBuilder<PracticeQuesBloc, GetPracticeQuesState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                spreadRadius: 1,
+                blurRadius: 5,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          OutlinedButton(
-            onPressed: () {
-              setState(() {
-                currentQuestion = (int.parse(currentQuestion) - 1).toString();
-                _selectedAnswer = null;
-              });
-              _fetchQuestionNumber(currentQuestion);
-            },
-            child: const Text("Previous"),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  setState(() {
+                    _selectedAnswer=null;
+                  });
+                  BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
+                    questionIndex: int.parse(currentQuestion) - 1,
+                  ));
+                },
+                child: const Text("Previous"),
+              ),
+              FilledButton(
+                onPressed: () {
+                  _selectedAnswer=null;
+                  print("isAnswerSelected--${BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected}");
+                  if (BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected) {
+                    BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
+                      questionIndex: int.parse(currentQuestion) + 1,
+                    ));
+                  } else {
+                    BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
+                      questionIndex: int.parse(currentQuestion) + 1,
+                    ));
+                  }
+                },
+                child: Text(
+                  BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected
+                      ? "Next"
+                      : "Skip",
+                ),
+              ),
+            ],
           ),
-          FilledButton(
-            onPressed: () {
-              setState(() {
-                currentQuestion = (int.parse(currentQuestion) + 1).toString();
-                _selectedAnswer = null;
-              });
-              _fetchQuestionNumber(currentQuestion);
-            },
-            child: const Text("Skip"),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
