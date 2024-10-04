@@ -14,18 +14,12 @@ class PracticeQuesBloc extends Bloc<PracticeQuesEvent, GetPracticeQuesState> {
   void onGetPracticeQues(GetExamDetails event, Emitter<GetPracticeQuesState> emit) async {
     emit(const GetPracticeQuesLoadingState());
     final currentQuestion = event.getCurrentQuestion;
-    print("current_question ques in BLoC${currentQuestion.runtimeType}");
-    print('jhghjgjh - $currentQuestion');
-    final data = await _getPracticeQuesUseCase.call(params: currentQuestion);
 
     try {
-      if (currentQuestion == null) {
-        throw Exception("Current question must not be null");
-      }
-      print("dsfjhsdgf - $data");
+      final data = await _getPracticeQuesUseCase.call(params: currentQuestion);
       emit(GetPracticeQuesLoadedState(data));
     } catch (e) {
-      print("Error in ques BLoC: $e");
+      print("Error in PracticeQuesBloc: $e");
       emit(const GetPracticeQuesErrorState(null));
     }
   }

@@ -63,25 +63,22 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Q $currentQuestion/13"),
+                  Text("Q ${currentQuestion}/13"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: GestureDetector(
-                          child: SvgPicture.asset(
-                            'assets/x_close.svg',
-                            fit: BoxFit.cover,
-                            height: 25,
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
+                      GestureDetector(
+                        child: SvgPicture.asset(
+                          'assets/x_close.svg',
+                          fit: BoxFit.cover,
+                          height: 25,
                         ),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
