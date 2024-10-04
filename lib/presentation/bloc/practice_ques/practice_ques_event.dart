@@ -1,3 +1,5 @@
+import 'package:quiz/data/models/submit_answers_request.dart';
+
 abstract class PracticeQuesEvent {
   const PracticeQuesEvent();
 }
@@ -18,4 +20,13 @@ class NavigateToQuestion extends PracticeQuesEvent {
   final int questionIndex;
 
   NavigateToQuestion({required this.questionIndex});
+}
+
+class SubmitUserAnswer extends PracticeQuesEvent {
+  final SubmitExerciseAnswerRequest submitExerciseAnswerRequest;
+
+  SubmitUserAnswer(this.submitExerciseAnswerRequest);
+
+  @override
+  List<Object?> get props => [submitExerciseAnswerRequest];
 }

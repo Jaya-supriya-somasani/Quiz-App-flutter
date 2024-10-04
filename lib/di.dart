@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:quiz/data/data_sources/remote/api_service.dart';
 import 'package:quiz/data/repositories/practice_exercise_repo_imp.dart';
 import 'package:quiz/data/repositories/question_repository_imp.dart';
+import 'package:quiz/data/repositories/submit_answers_repo_imp.dart';
 import 'package:quiz/domain/repositories/practice_exercise_repo.dart';
 import 'package:quiz/domain/repositories/practice_ques_repository.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
@@ -21,6 +22,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<PracticeQuesRepository>(PracticeQuesRepositoryImp(sl<ApiService>()));
   sl.registerLazySingleton<PracticeExerciseRepoImp>(() => PracticeExerciseRepoImp(sl.get<ApiService>()));
   sl.registerSingleton<PracticeExerciseRepo>(PracticeExerciseRepoImp(sl<ApiService>()));
+  sl.registerLazySingleton<SubmitAnswerRepoImp>(()=>SubmitAnswerRepoImp(sl.get<ApiService>()));
 
   //Use case dependencies
   sl.registerSingleton<GetPracticeQuesUseCase>(GetPracticeQuesUseCase(sl<PracticeQuesRepository>()));

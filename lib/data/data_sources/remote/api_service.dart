@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:quiz/data/data_sources/constants.dart';
 import 'package:quiz/data/models/api_response.dart';
-import 'package:quiz/data/models/practice_excercise_model.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
 import 'package:quiz/data/models/submit_answers_request.dart';
 import 'package:retrofit/retrofit.dart';
@@ -55,7 +54,7 @@ abstract class ApiService {
   });
 
   @POST("/explore/v3/practice/submit-answer")
-  Future<HttpResponse> submitExerciseAnswer({
+  Future<HttpResponse<dynamic>> submitExerciseAnswer({
     @Header("Authorization") required String bearerToken,
     @Header("admissionNumber") required String admissionNumber,
     @Header("courseId") required String courseId,
