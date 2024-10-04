@@ -178,7 +178,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                   }
                 },
                 child: Text(
-                  BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected
+                  _selectedAnswer != null
                       ? "Next"
                       : "Skip",
                 ),
