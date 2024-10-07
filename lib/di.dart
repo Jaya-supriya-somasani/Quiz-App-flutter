@@ -8,8 +8,11 @@ import 'package:quiz/domain/repositories/practice_exercise_repo.dart';
 import 'package:quiz/domain/repositories/practice_ques_repository.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
 import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
+import 'package:quiz/domain/usecases/submit_answers_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
+import 'package:quiz/presentation/bloc/submit_answers/submit_answer_bloc.dart';
+import 'domain/repositories/submit_answers_repo.dart';
 
 final sl = GetIt.instance;
 
@@ -27,8 +30,10 @@ Future<void> initializeDependencies() async {
   //Use case dependencies
   sl.registerSingleton<GetPracticeQuesUseCase>(GetPracticeQuesUseCase(sl<PracticeQuesRepository>()));
   sl.registerSingleton<GetPracticeExerciseUseCase>(GetPracticeExerciseUseCase(sl<PracticeExerciseRepo>()));
+  sl.registerSingleton<SubmitAnswersUseCase>(SubmitAnswersUseCase(sl<SubmitAnswersRepo>()));
 
   // Bloc dependencies
   sl.registerFactory<PracticeQuesBloc>(() => PracticeQuesBloc(sl<GetPracticeQuesUseCase>()));
   sl.registerFactory<PracticeExerciseBloc>(() => PracticeExerciseBloc(sl<GetPracticeExerciseUseCase>()));
+  sl.registerFactory<SubmitAnswersBloc>(() => SubmitAnswersBloc(sl<SubmitAnswersUseCase>()));
 }

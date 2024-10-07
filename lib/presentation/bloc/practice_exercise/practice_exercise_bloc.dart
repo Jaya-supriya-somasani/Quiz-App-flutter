@@ -1,4 +1,3 @@
-import 'package:dio/src/dio_exception.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_event.dart';
