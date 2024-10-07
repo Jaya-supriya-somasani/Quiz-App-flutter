@@ -72,12 +72,12 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Q ${currentQuestion}/13"),
+                  Text("Q $currentQuestion/13"),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus} topic-d ${state.practiceQuestions.topicId}",
+                        "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
                       ),
                       GestureDetector(
                         child: SvgPicture.asset(
@@ -164,6 +164,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
             children: [
               OutlinedButton(
                 onPressed: () {
+                  currentQuestion = (int.parse(currentQuestion) - 1).toString();
                   setState(() {
                     _selectedAnswer = null;
                   });
@@ -176,33 +177,36 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               ),
               FilledButton(
                 onPressed: () {
+                  currentQuestion = (int.parse(currentQuestion) + 1).toString();
+
                   String answerState =
                       _selectedAnswer != null ? "answered" : "skipped";
                   final submitAnswerReq = SubmitExerciseAnswerRequest(
-                      answerState: answerState,
-                      answerText: _selectedAnswer,
-                      chapterId:
-                          state.practiceQuestions?.chapterId ?? chapterId,
-                      // pcsctId: "pcsctid",
-                      itemUri: state.practiceQuestions?.itemUri??"http://tao.gcf.education/gcf.rdf#i15913411732818637070",
-                      // noOfInteractions: 10,
-                      practiceFormatId:
-                              "Ip4DogGnp1",
-                      practiceType:
-                          state.practiceQuestions?.practiceType ?? "chapter",
-                      programId:
-                          state.practiceQuestions?.programId ?? "mqJS5bOXgz",
-                      questionId:
-                          state.practiceQuestions?.questionId ?? "CYTBRhNHD2",
-                      questionNumber:
-                          state.practiceQuestions?.questionNumber ?? "3",
-                      questionType: state.practiceQuestions?.questionType ??
-                          "Single select",
-                      responseId: state.practiceQuestions?.responseId??"RESPONSE",
-                      // result: "correct",
-                      subjectId: state.practiceQuestions?.subjectId??"subjectid",
-                      timeTaken: 4032,
-                      // topicId: topicID
+                    answerState: answerState,
+                    answerText: _selectedAnswer,
+                    chapterId: state.practiceQuestions?.chapterId ?? chapterId,
+                    // pcsctId: "pcsctid",
+                    itemUri: state.practiceQuestions?.itemUri ??
+                        "http://tao.gcf.education/gcf.rdf#i15913411732818637070",
+                    // noOfInteractions: 10,
+                    practiceFormatId: "Ip4DogGnp1",
+                    practiceType:
+                        state.practiceQuestions?.practiceType ?? "chapter",
+                    programId:
+                        state.practiceQuestions?.programId ?? "mqJS5bOXgz",
+                    questionId:
+                        state.practiceQuestions?.questionId ?? "CYTBRhNHD2",
+                    questionNumber:
+                        state.practiceQuestions?.questionNumber ?? "3",
+                    questionType: state.practiceQuestions?.questionType ??
+                        "Single select",
+                    responseId:
+                        state.practiceQuestions?.responseId ?? "RESPONSE",
+                    // result: "correct",
+                    subjectId:
+                        state.practiceQuestions?.subjectId ?? "subjectid",
+                    timeTaken: 4032,
+                    // topicId: topicID
                   );
                   if (_selectedAnswer != null) {
                     print("call-post--api submitAnswerReq----$submitAnswerReq");
