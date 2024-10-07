@@ -12,6 +12,7 @@ class SubmitAnswersUseCase implements UseCase<dynamic,void>{
   Future<dynamic> call({void params}) async{
     final response= await submitAnswersRepo.submitAnswerData();
     if(response is DataSuccessState<SubmitAnswerResponse>){
+      print("response.data.data--- ${response.data.data}");
       return response.data.data;
     }else{
       throw Exception("Error in Submit answer Usecase");

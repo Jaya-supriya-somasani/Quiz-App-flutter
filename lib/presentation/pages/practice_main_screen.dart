@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:quiz/data/models/submit_answers_request.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
+import 'package:quiz/presentation/bloc/submit_answers/submit_answer_bloc.dart';
+import 'package:quiz/presentation/bloc/submit_answers/submit_answers_event.dart';
 
 class PracticeMainScreen extends StatefulWidget {
   const PracticeMainScreen({super.key, required this.completedQuestions});
@@ -30,6 +33,11 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
   void _fetchQuestionNumber(String questionNumber) {
     BlocProvider.of<PracticeQuesBloc>(context)
         .add(GetExamDetails(currentQuestion));
+  }
+
+  void _postAnswers(SubmitExerciseAnswerRequest submitAnswerReq){
+    BlocProvider.of<SubmitAnswersBloc>(context)
+        .add(PostSubmitAnswerDetails(submitAnswerReq));
   }
 
   @override
@@ -98,7 +106,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                     itemCount: state.practiceQuestions.optionList?.length ?? 0,
                     itemBuilder: (context, index) {
                       final optionHtml =
-                          state.practiceQuestions.optionList![index];
+                      state.practiceQuestions.optionList![index];
 
                       if (optionHtml.optionId == null) {
                         return const SizedBox();
@@ -155,7 +163,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               OutlinedButton(
                 onPressed: () {
                   setState(() {
-                    _selectedAnswer=null;
+                    _selectedAnswer = null;
                   });
                   BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
                     questionIndex: int.parse(currentQuestion) - 1,
@@ -165,22 +173,40 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               ),
               FilledButton(
                 onPressed: () {
-                  _selectedAnswer=null;
-                  print("isAnswerSelected--${BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected}");
-                  if (BlocProvider.of<PracticeQuesBloc>(context).isAnswerSelected) {
-                    BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
-                      questionIndex: int.parse(currentQuestion) + 1,
-                    ));
-                  } else {
-                    BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
-                      questionIndex: int.parse(currentQuestion) + 1,
-                    ));
+                  String answerState = _selectedAnswer != null ? "Answered" : "Skipped";
+                  final submitAnswerReq = SubmitExerciseAnswerRequest(
+                      answerState: answerState,
+                      answerText: "answerText",
+                      chapterId: state.practiceQuestions?.chapterId,
+                      pcsctId: "pcsctid",
+                      itemUri: "itemUri",
+                      noOfInteractions: 10,
+                      practiceFormatId: "--",
+                      practiceType: "practice mock",
+                      programId: state.practiceQuestions?.programId,
+                      questionId: state.practiceQuestions?.questionId,
+                      questionNumber: state.practiceQuestions?.questionNumber,
+                      questionType: state.practiceQuestions?.questionType,
+                      responseId: state.practiceQuestions?.responseId,
+                      result: "result--",
+                      subjectId: state.practiceQuestions?.subjectId,
+                      timeTaken: 40,
+                      topicId: state.practiceQuestions?.topicId);
+                  if (_selectedAnswer != null) {
+                    print("call-post--api submitAnswerReq----$submitAnswerReq");
+                    _postAnswers(submitAnswerReq);
                   }
+                  setState(() {
+                    _selectedAnswer = null;
+                  });
+
+                  BlocProvider.of<PracticeQuesBloc>(context)
+                      .add(NavigateToQuestion(
+                    questionIndex: int.parse(currentQuestion) + 1,
+                  ));
                 },
                 child: Text(
-                  _selectedAnswer != null
-                      ? "Next"
-                      : "Skip",
+                  _selectedAnswer != null ? "Next" : "Skip",
                 ),
               ),
             ],

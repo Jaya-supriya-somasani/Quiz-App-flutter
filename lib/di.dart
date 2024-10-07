@@ -25,7 +25,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<PracticeQuesRepository>(PracticeQuesRepositoryImp(sl<ApiService>()));
   sl.registerLazySingleton<PracticeExerciseRepoImp>(() => PracticeExerciseRepoImp(sl.get<ApiService>()));
   sl.registerSingleton<PracticeExerciseRepo>(PracticeExerciseRepoImp(sl<ApiService>()));
-  sl.registerLazySingleton<SubmitAnswerRepoImp>(()=>SubmitAnswerRepoImp(sl.get<ApiService>()));
+  sl.registerLazySingleton<SubmitAnswersRepo>(()=>SubmitAnswerRepoImp(sl.get<ApiService>()));
 
   //Use case dependencies
   sl.registerSingleton<GetPracticeQuesUseCase>(GetPracticeQuesUseCase(sl<PracticeQuesRepository>()));

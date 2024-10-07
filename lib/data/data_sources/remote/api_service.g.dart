@@ -133,7 +133,7 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<HttpResponse<dynamic>> submitExerciseAnswer({
+  Future<HttpResponse<SubmitAnswerResponse>> submitExerciseAnswer({
     required String bearerToken,
     required String admissionNumber,
     required String courseId,
@@ -147,9 +147,8 @@ class _ApiService implements ApiService {
       r'courseId': courseId,
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(submitRequest.toJson());
-    final _options = _setStreamType<HttpResponse<dynamic>>(Options(
+    final _data = submitRequest;
+    final _options = _setStreamType<HttpResponse<SubmitAnswerResponse>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
@@ -165,8 +164,14 @@ class _ApiService implements ApiService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch(_options);
-    final _value = _result.data;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SubmitAnswerResponse _value;
+    try {
+      _value = SubmitAnswerResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     final httpResponse = HttpResponse(_value, _result);
     return httpResponse;
   }

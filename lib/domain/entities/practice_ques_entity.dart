@@ -18,6 +18,11 @@ class PracticeQuesEntity extends Equatable {
   final String? responseIdentifier;
   final String? itemUri;
   final bool? isPrevious;
+  final String? chapterId;
+  final String? programId;
+  final String? subjectId;
+  final String? topicId;
+  final String? quesType;
 
   const PracticeQuesEntity({
     this.id,
@@ -36,6 +41,11 @@ class PracticeQuesEntity extends Equatable {
     this.responseIdentifier,
     this.itemUri,
     this.isPrevious,
+    this.chapterId,
+    this.programId,
+    this.subjectId,
+    this.topicId,
+    this.quesType,
   });
 
   @override
@@ -56,6 +66,11 @@ class PracticeQuesEntity extends Equatable {
     responseIdentifier,
     itemUri,
     isPrevious,
+    chapterId,
+    programId,
+    subjectId,
+    topicId,
+    questionType,
   ];
 
   factory PracticeQuesEntity.fromModel(PracticeQuesModel model) {
@@ -79,6 +94,11 @@ class PracticeQuesEntity extends Equatable {
       questionLevel: model.questionLevel,
       topicName: model.topicName,
       uri: model.uri,
+      chapterId: model.chapterId,
+      programId: model.programId,
+      subjectId: model.subjectId,
+      topicId: model.topicId,
+      quesType: model.questionType,
     );
   }
 }

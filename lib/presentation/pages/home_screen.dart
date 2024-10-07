@@ -4,10 +4,12 @@ import 'package:quiz/data/repositories/practice_exercise_repo_imp.dart';
 import 'package:quiz/di.dart';
 import 'package:quiz/domain/usecases/practice_exercise_usecase.dart';
 import 'package:quiz/domain/usecases/practice_ques_usecase.dart';
+import 'package:quiz/domain/usecases/submit_answers_usecase.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_bloc.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_event.dart';
 import 'package:quiz/presentation/bloc/practice_exercise/practice_exercise_state.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_bloc.dart';
+import 'package:quiz/presentation/bloc/submit_answers/submit_answer_bloc.dart';
 import 'package:quiz/presentation/widgets/subject_card.dart';
 
 import 'practice_main_screen.dart';
@@ -109,11 +111,16 @@ class _HomeScreen extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) => PracticeQuesBloc(
-                            sl<GetPracticeQuesUseCase>(),
-                          ),
-                          child: PracticeMainScreen(completedQuestions: 5 ?? 0),
+                        builder: (context) => MultiBlocProvider(
+                          providers: [
+                             BlocProvider(  create: (context) => PracticeQuesBloc(
+                               sl<GetPracticeQuesUseCase>(),
+                             ),),
+                            BlocProvider(  create: (context) => SubmitAnswersBloc(
+                              sl<SubmitAnswersUseCase>(),
+                            ),),
+                          ],
+                          child: PracticeMainScreen(completedQuestions: completedQues ?? 0),
                         ),
                       ),
                     );
