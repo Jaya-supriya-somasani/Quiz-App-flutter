@@ -13,22 +13,36 @@ abstract class ApiService {
   factory ApiService(Dio dio) {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        print("Request: ${options.method} ${options.uri}");
+        // Log request information
+        // print("Request: ${options.method} ${options.uri}");
         // print("Headers: ${options.headers}");
         // print("Request Body: ${options.data}");
+
+        // You can modify headers or other options here if necessary
+        options.headers['Content-Type'] = 'application/json';
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        // print("Response: ${response.statusCode} ${response.data}");
+        // Log response information
+        // print("Response Status: ${response.statusCode}");
+        // print("Response Data: ${response.data}");
         return handler.next(response); // continue
       },
       onError: (DioError e, handler) {
-        // print("Error: ${e.message}");
+        // Log error information
+        print("Error: ${e.message}");
+        if (e.response != null) {
+          print("Error Data: ${e.response?.data}");
+        }
         return handler.next(e); // continue
       },
     ));
+
+    // Now return the generated Retrofit API service
     return _ApiService(dio);
   }
+
+  // Define the API endpoints
 
   @GET('/explore/v3/practice/topic-test-question')
   Future<HttpResponse<PracticeQuesModel>> fetchTopicExerciseQuestion({
@@ -52,6 +66,7 @@ abstract class ApiService {
     @Header("Authorization") required String bearerToken,
     @Header("admissionNumber") required String admissionNumber,
     @Header("courseId") required String courseId,
+    @Header("content-type") String contentType = "application/json",
   });
 
   @POST("/explore/v3/practice/submit-answer")

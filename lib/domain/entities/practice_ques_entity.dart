@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:quiz/data/models/practice_ques_model.dart';
+import 'package:quiz/utils/constants.dart';
 
 class PracticeQuesEntity extends Equatable {
   final String? id;
@@ -22,7 +23,8 @@ class PracticeQuesEntity extends Equatable {
   final String? programId;
   final String? subjectId;
   final String? topicId;
-  final String? quesType;
+  final String? practiceType;
+  final String? practiceFormatId;
 
   const PracticeQuesEntity({
     this.id,
@@ -45,7 +47,8 @@ class PracticeQuesEntity extends Equatable {
     this.programId,
     this.subjectId,
     this.topicId,
-    this.quesType,
+    this.practiceType,
+    this.practiceFormatId
   });
 
   @override
@@ -70,7 +73,8 @@ class PracticeQuesEntity extends Equatable {
     programId,
     subjectId,
     topicId,
-    questionType,
+    practiceType,
+    practiceFormatId,
   ];
 
   factory PracticeQuesEntity.fromModel(PracticeQuesModel model) {
@@ -97,8 +101,9 @@ class PracticeQuesEntity extends Equatable {
       chapterId: model.chapterId,
       programId: model.programId,
       subjectId: model.subjectId,
-      topicId: model.topicId,
-      quesType: model.questionType,
+      topicId: topicID,
+      practiceType: model.practiceType,
+      practiceFormatId: model.practiceFormatId
     );
   }
 }

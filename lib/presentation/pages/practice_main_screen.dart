@@ -9,6 +9,7 @@ import 'package:quiz/presentation/bloc/practice_ques/practice_ques_event.dart';
 import 'package:quiz/presentation/bloc/practice_ques/practice_ques_state.dart';
 import 'package:quiz/presentation/bloc/submit_answers/submit_answer_bloc.dart';
 import 'package:quiz/presentation/bloc/submit_answers/submit_answers_event.dart';
+import 'package:quiz/utils/constants.dart';
 
 class PracticeMainScreen extends StatefulWidget {
   const PracticeMainScreen({super.key, required this.completedQuestions});
@@ -35,7 +36,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
         .add(GetExamDetails(currentQuestion));
   }
 
-  void _postAnswers(SubmitExerciseAnswerRequest submitAnswerReq){
+  void _postAnswers(SubmitExerciseAnswerRequest submitAnswerReq) {
     BlocProvider.of<SubmitAnswersBloc>(context)
         .add(PostSubmitAnswerDetails(submitAnswerReq));
   }
@@ -76,7 +77,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus}",
+                        "${state.practiceQuestions.questionType} ${state.practiceQuestions.questionStatus} topic-d ${state.practiceQuestions.topicId}",
                       ),
                       GestureDetector(
                         child: SvgPicture.asset(
@@ -106,7 +107,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                     itemCount: state.practiceQuestions.optionList?.length ?? 0,
                     itemBuilder: (context, index) {
                       final optionHtml =
-                      state.practiceQuestions.optionList![index];
+                          state.practiceQuestions.optionList![index];
 
                       if (optionHtml.optionId == null) {
                         return const SizedBox();
@@ -124,7 +125,8 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                         value: optionHtml.optionId!,
                         groupValue: _selectedAnswer,
                         onChanged: (value) {
-                          BlocProvider.of<PracticeQuesBloc>(context).add(SelectAnswer(value!));
+                          BlocProvider.of<PracticeQuesBloc>(context)
+                              .add(SelectAnswer(value!));
                           setState(() {
                             _selectedAnswer = value;
                           });
@@ -165,7 +167,8 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                   setState(() {
                     _selectedAnswer = null;
                   });
-                  BlocProvider.of<PracticeQuesBloc>(context).add(NavigateToQuestion(
+                  BlocProvider.of<PracticeQuesBloc>(context)
+                      .add(NavigateToQuestion(
                     questionIndex: int.parse(currentQuestion) - 1,
                   ));
                 },
@@ -173,25 +176,34 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
               ),
               FilledButton(
                 onPressed: () {
-                  String answerState = _selectedAnswer != null ? "Answered" : "Skipped";
+                  String answerState =
+                      _selectedAnswer != null ? "answered" : "skipped";
                   final submitAnswerReq = SubmitExerciseAnswerRequest(
                       answerState: answerState,
-                      answerText: "answerText",
-                      chapterId: state.practiceQuestions?.chapterId,
-                      pcsctId: "pcsctid",
-                      itemUri: "itemUri",
-                      noOfInteractions: 10,
-                      practiceFormatId: "--",
-                      practiceType: "chapter",
-                      programId: state.practiceQuestions?.programId,
-                      questionId: state.practiceQuestions?.questionId,
-                      questionNumber: state.practiceQuestions?.questionNumber,
-                      questionType: state.practiceQuestions?.questionType,
-                      responseId: state.practiceQuestions?.responseId,
-                      result: "result--",
-                      subjectId: state.practiceQuestions?.subjectId,
-                      timeTaken: 40,
-                      topicId: state.practiceQuestions?.topicId);
+                      answerText: _selectedAnswer,
+                      chapterId:
+                          state.practiceQuestions?.chapterId ?? chapterId,
+                      // pcsctId: "pcsctid",
+                      itemUri: state.practiceQuestions?.itemUri??"http://tao.gcf.education/gcf.rdf#i15913411732818637070",
+                      // noOfInteractions: 10,
+                      practiceFormatId:
+                              "Ip4DogGnp1",
+                      practiceType:
+                          state.practiceQuestions?.practiceType ?? "chapter",
+                      programId:
+                          state.practiceQuestions?.programId ?? "mqJS5bOXgz",
+                      questionId:
+                          state.practiceQuestions?.questionId ?? "CYTBRhNHD2",
+                      questionNumber:
+                          state.practiceQuestions?.questionNumber ?? "3",
+                      questionType: state.practiceQuestions?.questionType ??
+                          "Single select",
+                      responseId: state.practiceQuestions?.responseId??"RESPONSE",
+                      // result: "correct",
+                      subjectId: state.practiceQuestions?.subjectId??"subjectid",
+                      timeTaken: 4032,
+                      // topicId: topicID
+                  );
                   if (_selectedAnswer != null) {
                     print("call-post--api submitAnswerReq----$submitAnswerReq");
                     _postAnswers(submitAnswerReq);

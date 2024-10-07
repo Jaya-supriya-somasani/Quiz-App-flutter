@@ -15,6 +15,12 @@ class PracticeQuesModel extends PracticeQuesEntity {
   final String? responseId;
   final String? responseIdentifier;
   final String? uri;
+  final String? chapterId;
+  final String? programId;
+  final String? subjectId;
+  final String? topicId;
+  final String? practiceType;
+  final String? practiceFormatId;
 
   const PracticeQuesModel({
     this.id,
@@ -31,6 +37,12 @@ class PracticeQuesModel extends PracticeQuesEntity {
     this.responseId,
     this.responseIdentifier,
     this.uri,
+    this.chapterId,
+    this.programId,
+    this.topicId,
+    this.subjectId,
+    this.practiceType,
+    this.practiceFormatId,
   });
 
   factory PracticeQuesModel.fromJson(Map<String, dynamic> map) {
@@ -53,6 +65,12 @@ class PracticeQuesModel extends PracticeQuesEntity {
       responseId: map['response_id'] ?? "",
       responseIdentifier: map['response_identifier'] ?? "",
       uri: map['uri'] ?? "",
+      chapterId: map['chapter_id'] ?? "",
+      topicId: map['topic_id'] ?? "",
+      subjectId: map['subject_id'] ?? "",
+      programId: map['program_id'] ?? "",
+      practiceType: map['practice_type'] ?? "",
+      practiceFormatId: map['practice_format_id'] ?? "",
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:quiz/data/data_sources/remote/api_service.dart';
 import 'package:quiz/data/models/submit_answer_response.dart';
 import 'package:quiz/data/models/submit_answers_request.dart';
@@ -15,6 +16,7 @@ class SubmitAnswerRepoImp extends SubmitAnswersRepo {
   @override
   Future<DataState<SubmitAnswerResponse>> submitAnswerData(
       SubmitExerciseAnswerRequest submitAnsRequest) async {
+    print("Submitting answer data with request: ${submitAnsRequest.toJson()}");
     final response = await _apiService.submitExerciseAnswer(
         bearerToken: bearerToken,
         admissionNumber: admissionNumber,
@@ -24,11 +26,8 @@ class SubmitAnswerRepoImp extends SubmitAnswersRepo {
     try {
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
-
-        // if (dataMap == null) {
-        //   return DataFailedState("Data is null");
-        // }
         print("Data received: $dataMap");
+
         final submittedData = SubmitAnswerResponse.fromJson(dataMap);
         return DataSuccessState(submittedData);
       } else {
