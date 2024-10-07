@@ -182,7 +182,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                       itemUri: "itemUri",
                       noOfInteractions: 10,
                       practiceFormatId: "--",
-                      practiceType: "practice mock",
+                      practiceType: "chapter",
                       programId: state.practiceQuestions?.programId,
                       questionId: state.practiceQuestions?.questionId,
                       questionNumber: state.practiceQuestions?.questionNumber,

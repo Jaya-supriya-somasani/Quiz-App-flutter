@@ -26,22 +26,24 @@ class PracticeQuesRepositoryImp implements PracticeQuesRepository {
       courseId: courseId,
     );
 
-    print("current_question question_repo impl${questionNumber.runtimeType}");
+    print("Received response: ${response.response.data}");
+
     try {
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
 
-        if (dataMap == null) {
-          return DataFailedState("Data is null");
+        if (dataMap == null || dataMap.isEmpty) {
+          return DataFailedState("Data is null or empty");
         }
-        print("Data received: $dataMap");
+        print("Data received: in question repo $dataMap");
         final practiceQuestion = PracticeQuesModel.fromJson(dataMap);
         return DataSuccessState(practiceQuestion);
       } else {
-        return DataFailedState("Response status: ${response.response.statusCode}");
+        final errorMessage = response.response.data['message'] ?? "Unknown error occurred.";
+        return DataFailedState("Response status: ${response.response.statusCode}, Message: $errorMessage");
       }
     } catch (e) {
-      print("Exception in question repo impl: $e");
+      print("Exception in question repo implementation: $e");
       return DataFailedState(e.toString());
     }
   }

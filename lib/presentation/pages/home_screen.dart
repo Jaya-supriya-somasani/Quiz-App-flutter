@@ -120,7 +120,7 @@ class _HomeScreen extends State<HomeScreen> {
                               sl<SubmitAnswersUseCase>(),
                             ),),
                           ],
-                          child: PracticeMainScreen(completedQuestions: completedQues ?? 0),
+                          child: const PracticeMainScreen(completedQuestions: 1 ?? 0),
                         ),
                       ),
                     );

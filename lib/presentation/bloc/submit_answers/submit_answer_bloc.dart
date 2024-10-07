@@ -16,7 +16,7 @@ class SubmitAnswersBloc extends Bloc<SubmitAnswersEvent, SubmitAnswersState> {
     Emitter<SubmitAnswersState> emit,
   ) async {
     emit(SubmitAnswerLoadingState());
-    final data = await submitAnswersUseCase.call();
+    final data = await submitAnswersUseCase.call(params: event.submitExerciseAnswerRequest);
     try {
       emit(SubmitAnswerLoadedState(data));
     } catch (e) {
