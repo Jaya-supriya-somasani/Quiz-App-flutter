@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:quiz/data/data_sources/remote/api_service.dart';
 import 'package:quiz/data/models/submit_answer_response.dart';
 import 'package:quiz/data/models/submit_answers_request.dart';
@@ -22,11 +21,11 @@ class SubmitAnswerRepoImp extends SubmitAnswersRepo {
         admissionNumber: admissionNumber,
         courseId: courseId,
         submitRequest: submitAnsRequest);
-    print("data $response");
+    print("data SubmitAnswerResponse impl ${response.response}");
     try {
       if (response.response.statusCode == HttpStatus.ok) {
         final dataMap = response.response.data['data'];
-        print("Data received: $dataMap");
+        print("Data received: in repo $dataMap");
 
         final submittedData = SubmitAnswerResponse.fromJson(dataMap);
         return DataSuccessState(submittedData);

@@ -185,10 +185,10 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                     answerState: answerState,
                     answerText: _selectedAnswer,
                     chapterId: state.practiceQuestions?.chapterId ?? chapterId,
-                    // pcsctId: "pcsctid",
+                    pcsctId: "",
                     itemUri: state.practiceQuestions?.itemUri ??
                         "http://tao.gcf.education/gcf.rdf#i15913411732818637070",
-                    // noOfInteractions: 10,
+                    noOfInteractions: 10,
                     practiceFormatId: "Ip4DogGnp1",
                     practiceType:
                         state.practiceQuestions?.practiceType ?? "chapter",
@@ -202,11 +202,11 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                         "Single select",
                     responseId:
                         state.practiceQuestions?.responseId ?? "RESPONSE",
-                    // result: "correct",
+                    result: "correct",
                     subjectId:
                         state.practiceQuestions?.subjectId ?? "subjectid",
                     timeTaken: 4032,
-                    // topicId: topicID
+                    topicId: ''
                   );
                   if (_selectedAnswer != null) {
                     print("call-post--api submitAnswerReq----$submitAnswerReq");
@@ -222,7 +222,7 @@ class _PracticeMainScreen extends State<PracticeMainScreen> {
                   ));
                 },
                 child: Text(
-                  _selectedAnswer != null ? "Next" : "Skip",
+                  _selectedAnswer != null ? "Submit" : "Skip",
                 ),
               ),
             ],

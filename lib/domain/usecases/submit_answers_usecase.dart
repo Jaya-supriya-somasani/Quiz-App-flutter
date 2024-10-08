@@ -10,13 +10,17 @@ class SubmitAnswersUseCase implements UseCase<dynamic,SubmitExerciseAnswerReques
 
   SubmitAnswersUseCase(this.submitAnswersRepo);
   @override
-  Future<dynamic> call({required SubmitExerciseAnswerRequest params}) async{
+  Future<dynamic> call({required SubmitExerciseAnswerRequest params}) async {
     final response= await submitAnswersRepo.submitAnswerData(params);
-    if(response is DataSuccessState<SubmitAnswerResponse>){
+    print("usecase-responseSubmitAnswersUseCase $response");
+    if (response is DataSuccessState<SubmitAnswerResponse>) {
       print("response.data.data--- ${response.data.data}");
       return response.data.data;
-    }else{
-      throw Exception("Error in Submit answer Usecase");
+    }else if (response is DataFailedState<SubmitAnswerResponse>) {
+      print("Submit answer failed: ${response.error}");
+      throw Exception("Error in Submit answer Usecase: ${response.error}");
+    } else {
+      throw Exception("Unknown error in Submit answer Usecase");
     }
   }
 }

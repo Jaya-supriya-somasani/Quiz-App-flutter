@@ -14,9 +14,9 @@ abstract class ApiService {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         // Log request information
-        // print("Request: ${options.method} ${options.uri}");
-        // print("Headers: ${options.headers}");
-        // print("Request Body: ${options.data}");
+        print("Request: ${options.method} ${options.uri}");
+        print("Headers: ${options.headers}");
+        print("Request Body: ${options.data}");
 
         // You can modify headers or other options here if necessary
         options.headers['Content-Type'] = 'application/json';
@@ -24,8 +24,8 @@ abstract class ApiService {
       },
       onResponse: (response, handler) {
         // Log response information
-        // print("Response Status: ${response.statusCode}");
-        // print("Response Data: ${response.data}");
+        print("Response Status: ${response.statusCode}");
+        print("Response Data: ${response.data}");
         return handler.next(response); // continue
       },
       onError: (DioError e, handler) {
@@ -66,7 +66,6 @@ abstract class ApiService {
     @Header("Authorization") required String bearerToken,
     @Header("admissionNumber") required String admissionNumber,
     @Header("courseId") required String courseId,
-    @Header("content-type") String contentType = "application/json",
   });
 
   @POST("/explore/v3/practice/submit-answer")
